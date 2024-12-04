@@ -1,10 +1,10 @@
 const stringCount = 4;
-
-// const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-const notes = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
+const sharpNotes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+const flatNotes = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
 const openNotes = ["E", "A", "D", "G"];
 
-function calculateNoteOnFret(string, fret) {
+
+function calculateNoteOnFret(string, fret, notes) {
   const openNoteIndex = notes.indexOf(openNotes[string - 1]);
   return notes[(openNoteIndex + fret) % notes.length];
 }
@@ -79,12 +79,12 @@ function drawFretHeaders(ctx, fretCount, fretWidth, columnWidth, neckTop, neckBo
   }
 }
 
-function drawScaleNotes(ctx, fretCount, fretWidth, stringCount, stringSpacing, scale, columnWidth, startFret) {
+function drawScaleNotes(ctx, fretCount, fretWidth, stringCount, stringSpacing, notes, scale, columnWidth, startFret) {
   ctx.font = "12px Arial";
   ctx.textAlign = "center";
   for (let string = 1; string <= stringCount; string++) {
     for (let fret = startFret; fret <= fretCount + startFret - 1; fret++) {
-      const note = calculateNoteOnFret(string, fret);
+      const note = calculateNoteOnFret(string, fret, notes);
       if (scale.includes(note)) {
         const x = columnWidth + (fret - startFret + 0.5) * fretWidth;
         const y = string * stringSpacing + stringSpacing / 2;
@@ -127,7 +127,7 @@ function drawOpenStringNames(ctx, stringCount, stringSpacing, scale, columnWidth
   }
 }
 
-function drawBassFretboard(canvaName, scale, startFret, endFret,  showOpenStringNames = false, stringCount = 4) {
+function drawBassFretboard(canvaName, notes, scale, startFret, endFret,  showOpenStringNames = false, stringCount = 4) {
   const canvas = document.getElementById(canvaName);
   const ctx = canvas.getContext('2d');
   const canvasWidth = canvas.width;
@@ -151,7 +151,7 @@ function drawBassFretboard(canvaName, scale, startFret, endFret,  showOpenString
     drawOpenStringNames(ctx, stringCount, stringSpacing, scale, columnWidth);
   }
 
-  drawScaleNotes(ctx, fretCount, fretWidth, stringCount, stringSpacing, scale, columnWidth, startFret);
+  drawScaleNotes(ctx, fretCount, fretWidth, stringCount, stringSpacing, notes, scale, columnWidth, startFret);
 }
 
 const cMajorScale = ["C", "D", "E", "F", "G", "A", "B"];
@@ -164,50 +164,55 @@ const ebMajorScale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"];
 // Scale aggiuntive in bemolle
 const abMajorScale = ["Ab", "Bb", "C", "Db", "Eb", "F", "G"];  // La bemolle maggiore
 const dbMajorScale = ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"];  // Re bemolle maggiore
-const gbMajorScale = ["Gb", "Ab", "Bb", "B", "Db", "Eb", "F"];  // Sol bemolle maggiore
-const cbMajorScale = ["Cb", "Db", "Eb", "Fb", "Gb", "Ab", "Bb"];  // Do bemolle maggiore
-
-
+const gbMajorScale = ["Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F"];  // Sol bemolle maggiore
+const cbMajorScale = ["Cb", "Db", "Eb", "Fb", "Gb", "Ab", "Bb"];
 
 // C
-drawBassFretboard('C-1', cMajorScale, 1, 4, true);
-drawBassFretboard('C-2', cMajorScale, 2, 5);
-drawBassFretboard('C-3', cMajorScale, 4, 8);
-drawBassFretboard('C-4', cMajorScale, 7, 10);
-drawBassFretboard('C-5', cMajorScale, 9, 13);
+drawBassFretboard('C-1', flatNotes, cMajorScale, 1, 4, true);
+drawBassFretboard('C-2', flatNotes, cMajorScale, 2, 5);
+drawBassFretboard('C-3', flatNotes, cMajorScale, 4, 8);
+drawBassFretboard('C-4', flatNotes, cMajorScale, 7, 10);
+drawBassFretboard('C-5', flatNotes, cMajorScale, 9, 13);
 // F
-drawBassFretboard('F-1', fMajorScale, 1, 4, true);
-drawBassFretboard('F-2', fMajorScale, 2, 6);
-drawBassFretboard('F-3', fMajorScale, 5, 8);
-drawBassFretboard('F-4', fMajorScale, 7, 10);
-drawBassFretboard('F-5', fMajorScale, 9, 13);
+drawBassFretboard('F-1', flatNotes, fMajorScale, 1, 4, true);
+drawBassFretboard('F-2', flatNotes, fMajorScale, 2, 6);
+drawBassFretboard('F-3', flatNotes, fMajorScale, 5, 8);
+drawBassFretboard('F-4', flatNotes, fMajorScale, 7, 10);
+drawBassFretboard('F-5', flatNotes, fMajorScale, 9, 13);
 // Bb
-drawBassFretboard('Bb-1', bbMajorScale, 1, 4, true);
-drawBassFretboard('Bb-2', bbMajorScale, 2, 6);
-drawBassFretboard('Bb-3', bbMajorScale, 5, 8);
-drawBassFretboard('Bb-4', bbMajorScale, 7, 11);
-drawBassFretboard('Bb-5', bbMajorScale, 10, 13);
+drawBassFretboard('Bb-1', flatNotes, bbMajorScale, 1, 4, true);
+drawBassFretboard('Bb-2', flatNotes, bbMajorScale, 2, 6);
+drawBassFretboard('Bb-3', flatNotes, bbMajorScale, 5, 8);
+drawBassFretboard('Bb-4', flatNotes, bbMajorScale, 7, 11);
+drawBassFretboard('Bb-5', flatNotes, bbMajorScale, 10, 13);
 // Eb
-drawBassFretboard('Eb-1', ebMajorScale, 1, 4, true);
-drawBassFretboard('Eb-2', ebMajorScale, 3, 6);
-drawBassFretboard('Eb-3', ebMajorScale, 5, 8);
-drawBassFretboard('Eb-4', ebMajorScale, 7, 11);
-drawBassFretboard('Eb-5', ebMajorScale, 10, 13);
+drawBassFretboard('Eb-1', flatNotes, ebMajorScale, 1, 4, true);
+drawBassFretboard('Eb-2', flatNotes, ebMajorScale, 3, 6);
+drawBassFretboard('Eb-3', flatNotes, ebMajorScale, 5, 8);
+drawBassFretboard('Eb-4', flatNotes, ebMajorScale, 7, 11);
+drawBassFretboard('Eb-5', flatNotes, ebMajorScale, 10, 13);
 // Ab
-drawBassFretboard('Ab-1', abMajorScale, 1, 4, true);
-drawBassFretboard('Ab-2', abMajorScale, 3, 6);
-drawBassFretboard('Ab-3', abMajorScale, 5, 9);
-drawBassFretboard('Ab-4', abMajorScale, 8, 11);
-drawBassFretboard('Ab-5', abMajorScale, 10, 13);
+drawBassFretboard('Ab-1', flatNotes, abMajorScale, 1, 4, true);
+drawBassFretboard('Ab-2', flatNotes, abMajorScale, 3, 6);
+drawBassFretboard('Ab-3', flatNotes, abMajorScale, 5, 9);
+drawBassFretboard('Ab-4', flatNotes, abMajorScale, 8, 11);
+drawBassFretboard('Ab-5', flatNotes, abMajorScale, 10, 13);
 // Db
-drawBassFretboard('Db-1', dbMajorScale, 1, 4, true);
-drawBassFretboard('Db-2', dbMajorScale, 3, 6);
-drawBassFretboard('Db-3', dbMajorScale, 5, 9);
-drawBassFretboard('Db-4', dbMajorScale, 8, 11);
-drawBassFretboard('Db-5', dbMajorScale, 10, 14);
+drawBassFretboard('Db-1', flatNotes, dbMajorScale, 1, 4, true);
+drawBassFretboard('Db-2', flatNotes, dbMajorScale, 3, 6);
+drawBassFretboard('Db-3', flatNotes, dbMajorScale, 5, 9);
+drawBassFretboard('Db-4', flatNotes, dbMajorScale, 8, 11);
+drawBassFretboard('Db-5', flatNotes, dbMajorScale, 10, 14);
 // Gb
-drawBassFretboard('Gb-1', gbMajorScale, 1, 4, true);
-drawBassFretboard('Gb-2', gbMajorScale, 3, 7);
-drawBassFretboard('Gb-3', gbMajorScale, 6, 9);
-drawBassFretboard('Gb-4', gbMajorScale, 8, 11);
-drawBassFretboard('Gb-5', gbMajorScale, 10, 14);
+drawBassFretboard('Gb-1', flatNotes, gbMajorScale, 1, 4, true);
+drawBassFretboard('Gb-2', flatNotes, gbMajorScale, 3, 7);
+drawBassFretboard('Gb-3', flatNotes, gbMajorScale, 6, 9);
+drawBassFretboard('Gb-4', flatNotes, gbMajorScale, 8, 11);
+drawBassFretboard('Gb-5', flatNotes, gbMajorScale, 10, 14);
+
+// Cb
+drawBassFretboard('Cb-1', flatNotes, cbMajorScale, 1, 4, true);
+drawBassFretboard('Cb-2', flatNotes, cbMajorScale, 3, 7);
+drawBassFretboard('Cb-3', flatNotes, cbMajorScale, 6, 9);
+drawBassFretboard('Cb-4', flatNotes, cbMajorScale, 8, 12);
+drawBassFretboard('Cb-5', flatNotes, cbMajorScale, 11, 14);
