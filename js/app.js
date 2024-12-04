@@ -1,12 +1,20 @@
 const stringCount = 4;
-const sharpNotes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+const sharpNotes= ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 const flatNotes = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
 const openNotes = ["E", "A", "D", "G"];
 
+const enharmonics = { "Cb": "B", "Fb": "E", "B#": "C", "E#": "F" }; // Map delle enarmonie
 
-function calculateNoteOnFret(string, fret, notes) {
+function calculateNoteOnFret(string, fret, notes, openNotes) {
   const openNoteIndex = notes.indexOf(openNotes[string - 1]);
   return notes[(openNoteIndex + fret) % notes.length];
+}
+
+function adaptNotesForScale(notes, scale) {
+  return scale.reduce((acc, note) => {
+    const enharmonic = enharmonics[note]
+    return  enharmonic ? acc.map((n) => n === enharmonic ? note : n) : acc
+  }, notes)
 }
 
 function drawFretboardBackground(ctx, canvasWidth, canvasHeight, stringSpacing, columnWidth) {
@@ -79,12 +87,12 @@ function drawFretHeaders(ctx, fretCount, fretWidth, columnWidth, neckTop, neckBo
   }
 }
 
-function drawScaleNotes(ctx, fretCount, fretWidth, stringCount, stringSpacing, notes, scale, columnWidth, startFret) {
+function drawScaleNotes(ctx, fretCount, fretWidth, stringCount, stringSpacing, notes, openNotes, scale, columnWidth, startFret) {
   ctx.font = "12px Arial";
   ctx.textAlign = "center";
   for (let string = 1; string <= stringCount; string++) {
     for (let fret = startFret; fret <= fretCount + startFret - 1; fret++) {
-      const note = calculateNoteOnFret(string, fret, notes);
+      const note = calculateNoteOnFret(string, fret, notes, openNotes);
       if (scale.includes(note)) {
         const x = columnWidth + (fret - startFret + 0.5) * fretWidth;
         const y = string * stringSpacing + stringSpacing / 2;
@@ -104,7 +112,7 @@ function drawScaleNotes(ctx, fretCount, fretWidth, stringCount, stringSpacing, n
   }
 }
 
-function drawOpenStringNames(ctx, stringCount, stringSpacing, scale, columnWidth) {
+function drawOpenStringNames(ctx, stringCount, stringSpacing, scale, columnWidth, openNotes) {
   ctx.font = "12px Arial";
   ctx.textAlign = "center";
   for (let string = 1; string <= stringCount; string++) {
@@ -141,6 +149,9 @@ function drawBassFretboard(canvaName, notes, scale, startFret, endFret,  showOpe
   const neckTop = stringSpacing;
   const neckBottom = canvasHeight;
 
+  const adaptedNotes = adaptNotesForScale(notes, scale);
+  const adaptedOpenNotes = adaptNotesForScale(openNotes, scale);
+
   drawFretboardBackground(ctx, canvasWidth, canvasHeight, stringSpacing, columnWidth);
   drawFretHeaders(ctx, fretCount, fretWidth, columnWidth, neckTop, neckBottom, startFret, endFret);
   drawFretLines(ctx, fretCount, fretWidth, neckTop, neckBottom, columnWidth);
@@ -148,10 +159,10 @@ function drawBassFretboard(canvaName, notes, scale, startFret, endFret,  showOpe
   drawFretMarkers(ctx, fretCount, fretWidth, neckTop, neckBottom, columnWidth, startFret);
 
   if (showOpenStringNames) {
-    drawOpenStringNames(ctx, stringCount, stringSpacing, scale, columnWidth);
+    drawOpenStringNames(ctx, stringCount, stringSpacing, scale, columnWidth, adaptedOpenNotes);
   }
 
-  drawScaleNotes(ctx, fretCount, fretWidth, stringCount, stringSpacing, notes, scale, columnWidth, startFret);
+  drawScaleNotes(ctx, fretCount, fretWidth, stringCount, stringSpacing, adaptedNotes, adaptedOpenNotes, scale, columnWidth, startFret);
 }
 
 const cMajorScale = ["C", "D", "E", "F", "G", "A", "B"];
