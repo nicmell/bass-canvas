@@ -18,16 +18,20 @@ class BassFretboard {
 
     this.notes = adaptNotesForScale(config.notes, config.scale);
     this.openNotes = adaptNotesForScale(openNotes, config.scale);
-    this.stringCount = config.stringCount
     this.startFret = config.startFret
     this.endFret = config.endFret
     this.scale = config.scale;
+    this.stringCount = config.stringCount
 
     this.canvasWidth = this.canvas.width;
     this.canvasHeight = this.canvas.height;
     this.fretCount = this.endFret - this.startFret + 1;
     this.fretWidth = this.canvasWidth / this.fretCount;
     this.fretHeight = this.canvasHeight / (this.stringCount + 1);
+
+    this.fretboardOffset = this.fretWidth * (
+      Math.max(this.startFret, 1) - this.startFret
+    )
   }
 
   calculateNoteOnFret(string, fret, notes, openNotes) {
@@ -37,13 +41,11 @@ class BassFretboard {
 
   drawFretboardBackground() {
     this.ctx.fillStyle = "#f0e4d7";
-    const offset = this.fretWidth * (Math.max(this.startFret, 1) - this.startFret);
-    this.ctx.fillRect(offset, this.fretHeight, this.canvasWidth, this.canvasHeight - this.fretHeight);
+    this.ctx.fillRect(this.fretboardOffset, this.fretHeight, this.canvasWidth, this.canvasHeight - this.fretHeight);
   }
 
   drawFretLines() {
-    const offset = Math.max(this.startFret, 1) - this.startFret;
-    for (let i = offset; i <= this.fretCount; i++) {
+    for (let i = this.fretboardOffset / this.fretWidth; i <= this.fretCount; i++) {
       const x = i * this.fretWidth;
       this.ctx.beginPath();
       this.ctx.moveTo(x, this.fretHeight);
@@ -55,11 +57,10 @@ class BassFretboard {
   }
 
   drawStrings() {
-    const offset = this.fretWidth * (Math.max(this.startFret, 1) - this.startFret);
     for (let i = 0; i <= this.stringCount; i++) {
       const y = (i + 1) * this.fretHeight;
       this.ctx.beginPath();
-      this.ctx.moveTo(offset, y);
+      this.ctx.moveTo(this.fretboardOffset, y);
       this.ctx.lineTo(this.canvasWidth, y);
       this.ctx.strokeStyle = "#000";
       this.ctx.lineWidth = 1;
