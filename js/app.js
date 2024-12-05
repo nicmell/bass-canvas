@@ -27,7 +27,7 @@ class BassFretboard {
     this.canvasHeight = this.canvas.height;
     this.fretCount = this.endFret - this.startFret + 1;
     this.fretWidth = this.canvasWidth / this.fretCount;
-    this.stringSpacing = this.canvasHeight / (this.stringCount + 1);
+    this.fretHeight = this.canvasHeight / (this.stringCount + 1);
   }
 
   calculateNoteOnFret(string, fret, notes, openNotes) {
@@ -38,7 +38,7 @@ class BassFretboard {
   drawFretboardBackground() {
     this.ctx.fillStyle = "#f0e4d7";
     const offset = this.fretWidth * (Math.max(this.startFret, 1) - this.startFret);
-    this.ctx.fillRect(offset, this.stringSpacing, this.canvasWidth, this.canvasHeight - this.stringSpacing);
+    this.ctx.fillRect(offset, this.fretHeight, this.canvasWidth, this.canvasHeight - this.fretHeight);
   }
 
   drawFretLines() {
@@ -46,7 +46,7 @@ class BassFretboard {
     for (let i = offset; i <= this.fretCount; i++) {
       const x = i * this.fretWidth;
       this.ctx.beginPath();
-      this.ctx.moveTo(x, this.stringSpacing);
+      this.ctx.moveTo(x, this.fretHeight);
       this.ctx.lineTo(x, this.canvasHeight);
       this.ctx.strokeStyle = "#000";
       this.ctx.lineWidth = 1;
@@ -57,7 +57,7 @@ class BassFretboard {
   drawStrings() {
     const offset = this.fretWidth * (Math.max(this.startFret, 1) - this.startFret);
     for (let i = 0; i <= this.stringCount; i++) {
-      const y = (i + 1) * this.stringSpacing;
+      const y = (i + 1) * this.fretHeight;
       this.ctx.beginPath();
       this.ctx.moveTo(offset, y);
       this.ctx.lineTo(this.canvasWidth, y);
@@ -72,7 +72,7 @@ class BassFretboard {
     for (let i = 0; i < this.fretCount; i++) {
       const fretNum = this.startFret + i;
       const x =  (i + 0.5) * this.fretWidth;
-      const y = this.stringSpacing + (this.canvasHeight - this.stringSpacing) / 2;
+      const y = this.fretHeight + (this.canvasHeight - this.fretHeight) / 2;
 
       if (fretNum >= 1 && fretMarkers.includes(fretNum)) {
         this.ctx.beginPath();
@@ -93,8 +93,8 @@ class BassFretboard {
   }
 
   drawFretHeaders() {
-    const fretHeight = (this.canvasHeight - this.stringSpacing) / (this.endFret - this.startFret + 1); // Altezza di un tasto
-    const headerY = this.stringSpacing / 2;  // Posiziona il numero al centro del tasto
+    const fretHeight = (this.canvasHeight - this.fretHeight) / (this.endFret - this.startFret + 1); // Altezza di un tasto
+    const headerY = this.fretHeight / 2;  // Posiziona il numero al centro del tasto
 
     this.ctx.font = "16px Arial";
     this.ctx.textAlign = "center";
@@ -116,7 +116,7 @@ class BassFretboard {
         const note = this.calculateNoteOnFret(string, fret);
         if (this.scale.includes(note)) {
           const x = (fret - this.startFret + 0.5) * this.fretWidth;
-          const y = string * this.stringSpacing + this.stringSpacing / 2;
+          const y = string * this.fretHeight + this.fretHeight / 2;
 
           this.ctx.beginPath();
           this.ctx.arc(x, y, 12, 0, Math.PI * 2);
