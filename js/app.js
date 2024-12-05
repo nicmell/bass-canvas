@@ -1,3 +1,7 @@
+
+const canvasWidth = 300
+const canvasHeight = 150
+
 const sharpNotes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 const flatNotes = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
 const enharmonics = { "Cb": "B", "Fb": "E", "B#": "C", "E#": "F" };
@@ -10,24 +14,19 @@ function adaptNotesForScale(notes, scale) {
   }, notes);
 }
 
-
 class BassFretboard {
-  constructor(canvasId, config) {
-    this.canvas = document.getElementById(canvasId);
-    this.ctx = this.canvas.getContext("2d");
 
+  constructor(config) {
     this.notes = adaptNotesForScale(config.notes, config.scale);
     this.openNotes = adaptNotesForScale(openNotes, config.scale);
     this.startFret = config.startFret
     this.endFret = config.endFret
     this.scale = config.scale;
-    this.stringCount = config.stringCount
+    this.stringCount = config.stringCount || 4
 
-    this.canvasWidth = this.canvas.width;
-    this.canvasHeight = this.canvas.height;
     this.fretCount = this.endFret - this.startFret + 1;
-    this.fretWidth = this.canvasWidth / this.fretCount;
-    this.fretHeight = this.canvasHeight / (this.stringCount + 1);
+    this.fretWidth = canvasWidth / this.fretCount;
+    this.fretHeight = canvasHeight / (this.stringCount + 1);
 
     this.fretboardOffset = this.fretWidth * (
       Math.max(this.startFret, 1) - this.startFret
@@ -39,79 +38,78 @@ class BassFretboard {
     return this.notes[(openNoteIndex + fret) % this.notes.length];
   }
 
-  drawFretboardBackground() {
-    this.ctx.fillStyle = "#f0e4d7";
-    this.ctx.fillRect(this.fretboardOffset, this.fretHeight, this.canvasWidth, this.canvasHeight - this.fretHeight);
+  drawFretboardBackground(ctx) {
+    ctx.fillStyle = "#f0e4d7";
+    ctx.fillRect(this.fretboardOffset, this.fretHeight, canvasWidth, canvasHeight - this.fretHeight);
   }
 
-  drawFretLines() {
+  drawFretLines(ctx) {
     for (let i = this.fretboardOffset / this.fretWidth; i <= this.fretCount; i++) {
       const x = i * this.fretWidth;
-      this.ctx.beginPath();
-      this.ctx.moveTo(x, this.fretHeight);
-      this.ctx.lineTo(x, this.canvasHeight);
-      this.ctx.strokeStyle = "#000";
-      this.ctx.lineWidth = 1;
-      this.ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(x, this.fretHeight);
+      ctx.lineTo(x, canvasHeight);
+      ctx.strokeStyle = "#000";
+      ctx.lineWidth = 1;
+      ctx.stroke();
     }
   }
 
-  drawStrings() {
+  drawStrings(ctx) {
     for (let i = 0; i <= this.stringCount; i++) {
       const y = (i + 1) * this.fretHeight;
-      this.ctx.beginPath();
-      this.ctx.moveTo(this.fretboardOffset, y);
-      this.ctx.lineTo(this.canvasWidth, y);
-      this.ctx.strokeStyle = "#000";
-      this.ctx.lineWidth = 1;
-      this.ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(this.fretboardOffset, y);
+      ctx.lineTo(canvasWidth, y);
+      ctx.strokeStyle = "#000";
+      ctx.lineWidth = 1;
+      ctx.stroke();
     }
   }
 
-  drawFretMarkers() {
+  drawFretMarkers(ctx) {
     const fretMarkers = [3, 5, 7, 9, 15, 17, 19];
     for (let i = 0; i < this.fretCount; i++) {
       const fretNum = this.startFret + i;
       const x =  (i + 0.5) * this.fretWidth;
-      const y = this.fretHeight + (this.canvasHeight - this.fretHeight) / 2;
+      const y = this.fretHeight + (canvasHeight - this.fretHeight) / 2;
 
       if (fretNum >= 1 && fretMarkers.includes(fretNum)) {
-        this.ctx.beginPath();
-        this.ctx.arc(x, y, 8, 0, Math.PI * 2);
-        this.ctx.fillStyle = "#000";
-        this.ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x, y, 8, 0, Math.PI * 2);
+        ctx.fillStyle = "#000";
+        ctx.fill();
       }
 
       if (fretNum === 12) {
-        this.ctx.beginPath();
-        this.ctx.arc(x, y - 10, 8, 0, Math.PI * 2);
-        this.ctx.fill();
-        this.ctx.beginPath();
-        this.ctx.arc(x, y + 10, 8, 0, Math.PI * 2);
-        this.ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x, y - 10, 8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x, y + 10, 8, 0, Math.PI * 2);
+        ctx.fill();
       }
     }
   }
 
-  drawFretHeaders() {
-    const fretHeight = (this.canvasHeight - this.fretHeight) / (this.endFret - this.startFret + 1); // Altezza di un tasto
+  drawFretHeaders(ctx) {
     const headerY = this.fretHeight / 2;  // Posiziona il numero al centro del tasto
 
-    this.ctx.font = "16px Arial";
-    this.ctx.textAlign = "center";
-    this.ctx.fillStyle = "#000";
+    ctx.font = "16px Arial";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#000";
     for (let i = 0; i < this.fretCount; i++) {
       const fretNum = this.startFret + i;
       const x = (i + 0.5) * this.fretWidth;
       if (fretNum >= 1) {
-        this.ctx.fillText(fretNum, x, headerY);  // Centra il numero nella parte superiore
+        ctx.fillText(fretNum, x, headerY);  // Centra il numero nella parte superiore
       }
     }
   }
 
-  drawScaleNotes() {
-    this.ctx.font = "12px Arial";
-    this.ctx.textAlign = "center";
+  drawScaleNotes(ctx) {
+    ctx.font = "12px Arial";
+    ctx.textAlign = "center";
     for (let string = 1; string <= this.stringCount; string++) {
       for (let fret = this.startFret; fret <= this.fretCount + this.startFret - 1; fret++) {
         const note = this.calculateNoteOnFret(string, fret);
@@ -119,28 +117,28 @@ class BassFretboard {
           const x = (fret - this.startFret + 0.5) * this.fretWidth;
           const y = string * this.fretHeight + this.fretHeight / 2;
 
-          this.ctx.beginPath();
-          this.ctx.arc(x, y, 12, 0, Math.PI * 2);
-          this.ctx.fillStyle = "#fff";
-          this.ctx.fill();
-          this.ctx.strokeStyle = "#000";
-          this.ctx.lineWidth = 1;
-          this.ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(x, y, 12, 0, Math.PI * 2);
+          ctx.fillStyle = "#fff";
+          ctx.fill();
+          ctx.strokeStyle = "#000";
+          ctx.lineWidth = 1;
+          ctx.stroke();
 
-          this.ctx.fillStyle = "#000";
-          this.ctx.fillText(note, x, y + 3);
+          ctx.fillStyle = "#000";
+          ctx.fillText(note, x, y + 3);
         }
       }
     }
   }
 
-  draw() {
-    this.drawFretboardBackground();
-    this.drawFretHeaders();
-    this.drawFretLines();
-    this.drawStrings();
-    this.drawFretMarkers();
-    this.drawScaleNotes();
+  draw(ctx) {
+    this.drawFretboardBackground(ctx);
+    this.drawFretHeaders(ctx);
+    this.drawFretLines(ctx);
+    this.drawStrings(ctx);
+    this.drawFretMarkers(ctx);
+    this.drawScaleNotes(ctx);
   }
 }
 
@@ -156,7 +154,10 @@ const scales = {
 };
 
 function drawFretboardForScale(scaleKey, scaleNotes, configurations) {
-  configurations.forEach(({ canvasId, startFret, endFret }) => {
+  configurations.forEach(({ startFret, endFret }, index) => {
+    const canvasId = [scaleKey, index + 1].join("-")
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext("2d");
     const config = {
       notes: flatNotes,
       stringCount: 4,
@@ -164,72 +165,86 @@ function drawFretboardForScale(scaleKey, scaleNotes, configurations) {
       endFret,
       scale: scaleNotes,
     };
-    const fretboard = new BassFretboard(canvasId, config);
-    fretboard.draw();
+    (new BassFretboard(config)).draw(ctx)
   });
 }
 
 // Configurazioni per ogni scala
 const scaleConfigurations = {
   C: [
-    { canvasId: "C-1", startFret: 0, endFret: 4 },
-    { canvasId: "C-2", startFret: 2, endFret: 5 },
-    { canvasId: "C-3", startFret: 4, endFret: 8 },
-    { canvasId: "C-4", startFret: 7, endFret: 10 },
-    { canvasId: "C-5", startFret: 9, endFret: 13 },
+    { startFret: 0, endFret: 4 },
+    { startFret: 2, endFret: 5 },
+    { startFret: 4, endFret: 8 },
+    { startFret: 7, endFret: 10 },
+    { startFret: 9, endFret: 13 },
   ],
   F: [
-    { canvasId: "F-1", startFret: 0, endFret: 4 },
-    { canvasId: "F-2", startFret: 2, endFret: 6 },
-    { canvasId: "F-3", startFret: 5, endFret: 8 },
-    { canvasId: "F-4", startFret: 7, endFret: 10 },
-    { canvasId: "F-5", startFret: 9, endFret: 13 },
+    { startFret: 0, endFret: 4 },
+    { startFret: 2, endFret: 6 },
+    { startFret: 5, endFret: 8 },
+    { startFret: 7, endFret: 10 },
+    { startFret: 9, endFret: 13 },
   ],
   Bb: [
-    { canvasId: "Bb-1", startFret: 0, endFret: 4 },
-    { canvasId: "Bb-2", startFret: 2, endFret: 6 },
-    { canvasId: "Bb-3", startFret: 5, endFret: 8 },
-    { canvasId: "Bb-4", startFret: 7, endFret: 11 },
-    { canvasId: "Bb-5", startFret: 10, endFret: 13 },
+    { startFret: 0, endFret: 4 },
+    { startFret: 2, endFret: 6 },
+    { startFret: 5, endFret: 8 },
+    { startFret: 7, endFret: 11 },
+    { startFret: 10, endFret: 13 },
   ],
   Eb: [
-    { canvasId: "Eb-1", startFret: 0, endFret: 4 },
-    { canvasId: "Eb-2", startFret: 3, endFret: 6 },
-    { canvasId: "Eb-3", startFret: 5, endFret: 8 },
-    { canvasId: "Eb-4", startFret: 7, endFret: 11 },
-    { canvasId: "Eb-5", startFret: 10, endFret: 13 },
+    { startFret: 0, endFret: 4 },
+    { startFret: 3, endFret: 6 },
+    { startFret: 5, endFret: 8 },
+    { startFret: 7, endFret: 11 },
+    { startFret: 10, endFret: 13 },
   ],
   Ab: [
-    { canvasId: "Ab-1", startFret: 0, endFret: 4 },
-    { canvasId: "Ab-2", startFret: 3, endFret: 6 },
-    { canvasId: "Ab-3", startFret: 5, endFret: 9 },
-    { canvasId: "Ab-4", startFret: 8, endFret: 11 },
-    { canvasId: "Ab-5", startFret: 10, endFret: 13 },
+    { startFret: 0, endFret: 4 },
+    { startFret: 3, endFret: 6 },
+    { startFret: 5, endFret: 9 },
+    { startFret: 8, endFret: 11 },
+    { startFret: 10, endFret: 13 },
   ],
   Db: [
-    { canvasId: "Db-1", startFret: 0, endFret: 4 },
-    { canvasId: "Db-2", startFret: 3, endFret: 6 },
-    { canvasId: "Db-3", startFret: 5, endFret: 9 },
-    { canvasId: "Db-4", startFret: 8, endFret: 11 },
-    { canvasId: "Db-5", startFret: 10, endFret: 14 },
+    { startFret: 0, endFret: 4 },
+    { startFret: 3, endFret: 6 },
+    { startFret: 5, endFret: 9 },
+    { startFret: 8, endFret: 11 },
+    { startFret: 10, endFret: 14 },
   ],
   Gb: [
-    { canvasId: "Gb-1", startFret: 0, endFret: 4 },
-    { canvasId: "Gb-2", startFret: 3, endFret: 7 },
-    { canvasId: "Gb-3", startFret: 6, endFret: 9 },
-    { canvasId: "Gb-4", startFret: 8, endFret: 11 },
-    { canvasId: "Gb-5", startFret: 10, endFret: 14 },
+    { startFret: 0, endFret: 4 },
+    { startFret: 3, endFret: 7 },
+    { startFret: 6, endFret: 9 },
+    { startFret: 8, endFret: 11 },
+    { startFret: 10, endFret: 14 },
   ],
   Cb: [
-    { canvasId: "Cb-1", startFret: 0, endFret: 4 },
-    { canvasId: "Cb-2", startFret: 3, endFret: 7 },
-    { canvasId: "Cb-3", startFret: 6, endFret: 9 },
-    { canvasId: "Cb-4", startFret: 8, endFret: 12 },
-    { canvasId: "Cb-5", startFret: 11, endFret: 14 },
+    { startFret: 0, endFret: 4 },
+    { startFret: 3, endFret: 7 },
+    { startFret: 6, endFret: 9 },
+    { startFret: 8, endFret: 12 },
+    { startFret: 11, endFret: 14 },
   ],
 };
 
-// Disegna le tastiere per ogni scala
-Object.entries(scales).forEach(([key, scaleNotes]) => {
-  drawFretboardForScale(key, scaleNotes, scaleConfigurations[key]);
+function createBassFretboard(scaleKey, index) {
+  const canvasElement = document.createElement('canvas')
+  canvasElement.id = [scaleKey, index + 1].join("-")
+  const {startFret, endFret} = scaleConfigurations[scaleKey][index]
+  const fretboard = new BassFretboard({notes: flatNotes, scale: scales[scaleKey], startFret, endFret});
+  fretboard.draw(canvasElement.getContext("2d"))
+  return canvasElement
+}
+
+document.querySelectorAll('.scale')
+  .forEach((parent) => {
+    const {id: scaleKey} = parent
+    const span = document.createElement("span")
+    span.innerText = scaleKey;
+    parent.append(span);
+    [...Array(5).keys()].forEach((index) => {
+      parent.append(createBassFretboard(scaleKey, index));
+    })
 });
