@@ -7,12 +7,12 @@ const mode = process.env.NODE_ENV
 module.exports = {
   mode,
   entry: {
-    app: './js/app.js',
+    app: './js/index.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
-    filename: './js/app.js',
+    filename: './js/index.js',
   },
   plugins: [
     new HtmlWebpackPlugin({
