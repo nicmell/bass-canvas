@@ -1,17 +1,6 @@
-import {flatNotes} from "./constants";
+import {flatNotes, flatScales} from "./constants";
 import {BassFretboard} from "./bassFretboard";
 
-
-const scales = {
-  C: ["C", "D", "E", "F", "G", "A", "B"],
-  F: ["F", "G", "A", "Bb", "C", "D", "E"],
-  Bb: ["Bb", "C", "D", "Eb", "F", "G", "A"],
-  Eb: ["Eb", "F", "G", "Ab", "Bb", "C", "D"],
-  Ab: ["Ab", "Bb", "C", "Db", "Eb", "F", "G"],
-  Db: ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"],
-  Gb: ["Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F"],
-  Cb: ["Cb", "Db", "Eb", "Fb", "Gb", "Ab", "Bb"],
-};
 
 const scaleConfigurations = {
   C: [
@@ -80,7 +69,7 @@ function createBassFretboard(scaleKey, index) {
   canvasElement.width = canvasWidth
   canvasElement.height = canvasHeight
   const {startFret, endFret} = scaleConfigurations[scaleKey][index]
-  const fretboard = new BassFretboard({notes: flatNotes, scale: scales[scaleKey], startFret, endFret});
+  const fretboard = new BassFretboard({notes: flatNotes, scale: flatScales[scaleKey], startFret, endFret});
   fretboard.draw(canvasElement.getContext("2d"))
   return canvasElement
 }
