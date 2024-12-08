@@ -1,4 +1,4 @@
-import {openNotes} from "./constants";
+import {colors, openNotes} from "./constants";
 import {adaptNotesForScale, noteName} from "./utils";
 
 export class BassFretboard {
@@ -11,6 +11,7 @@ export class BassFretboard {
                 scale,
                 startFret,
                 endFret,
+                position,
                 stringCount = 4,
               }) {
     const {canvasWidth, canvasHeight} = BassFretboard
@@ -28,6 +29,8 @@ export class BassFretboard {
 
     this.emptyFretCount = Math.max(startFret, 1) - startFret
     this.fretboardOffset = this.fretWidth * this.emptyFretCount
+
+    this.position = position
   }
 
   calculateNoteOnFret(string, fret) {
@@ -124,7 +127,7 @@ export class BassFretboard {
   }
 
   drawScaleNotes(ctx) {
-    const {stringCount, startFret, fretCount, fretWidth, fretHeight, scale} = this;
+    const {stringCount, startFret, fretCount, fretWidth, fretHeight, scale, position} = this;
 
     ctx.font = "12px Arial";
     ctx.textAlign = "center";
@@ -139,7 +142,16 @@ export class BassFretboard {
 
           ctx.beginPath();
           ctx.arc(x, y, 12, 0, Math.PI * 2);
-          ctx.fillStyle = "#fff";
+          if (position) {
+            const {light, dark} = colors[position]
+            if (note === scale[0]) {
+              ctx.fillStyle = dark
+            } else {
+              ctx.fillStyle = light
+            }
+          } else {
+            ctx.fillStyle = "#fff";
+          }
           ctx.fill();
           ctx.strokeStyle = "#000";
           ctx.lineWidth = 1;

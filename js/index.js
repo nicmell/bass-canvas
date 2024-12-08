@@ -11,13 +11,14 @@ function createBassFretboard(configurations, scaleKey, index) {
   canvasElement.width = canvasWidth
   canvasElement.height = canvasHeight
   const {scale, notes, openNotes, positions} = configurations[scaleKey]
-  const {startFret, endFret} = positions[index]
+  const {startFret, endFret, position} = positions[index]
   const fretboard = new BassFretboard({
     scale,
     notes,
     openNotes,
     startFret,
-    endFret
+    endFret,
+    position
   });
   fretboard.draw(canvasElement.getContext("2d"))
   return canvasElement
