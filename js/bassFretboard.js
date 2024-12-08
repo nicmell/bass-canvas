@@ -1,11 +1,5 @@
-import {enharmonics, openNotes} from "./constants";
-
-function adaptNotesForScale(notes, scale) {
-  return scale.reduce((acc, note) => {
-    const enharmonic = enharmonics[note];
-    return enharmonic ? acc.map((n) => (n === enharmonic ? note : n)) : acc;
-  }, notes);
-}
+import {openNotes} from "./constants";
+import {adaptNotesForScale, noteName} from "./utils";
 
 export class BassFretboard {
   static canvasWidth = 300;
@@ -13,6 +7,7 @@ export class BassFretboard {
 
   constructor({
                 notes,
+                openNotes,
                 scale,
                 startFret,
                 endFret,
@@ -20,8 +15,8 @@ export class BassFretboard {
               }) {
     const {canvasWidth, canvasHeight} = BassFretboard
 
-    this.notes = adaptNotesForScale(notes, scale);
-    this.openNotes = adaptNotesForScale(openNotes, scale);
+    this.notes = notes;
+    this.openNotes = openNotes;
     this.startFret = startFret;
     this.endFret = endFret;
     this.scale = scale;
@@ -151,7 +146,7 @@ export class BassFretboard {
           ctx.stroke();
 
           ctx.fillStyle = "#000";
-          ctx.fillText(note, x, y + 3);
+          ctx.fillText(noteName(note), x, y + 3);
         }
       }
     }

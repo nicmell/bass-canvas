@@ -1,3 +1,5 @@
+import {createConfiguration} from "./utils";
+
 export const Notes = {
   A: "A",
   B: "B",
@@ -6,20 +8,20 @@ export const Notes = {
   E: "E",
   F: "F",
   G: "G",
-  A_Flat: "Ab",
-  B_Flat: "Bb",
-  C_Flat: "Cb",
-  D_Flat: "Db",
-  E_Flat: "Eb",
-  F_Flat: "Fb",
-  G_Flat: "Gb",
-  A_Sharp: "A#",
-  B_Sharp: "B#",
-  C_Sharp: "C#",
-  D_Sharp: "D#",
-  E_Sharp: "E#",
-  F_Sharp: "F#",
-  G_Sharp: "G#",
+  A_Flat: "A_Flat",
+  B_Flat: "B_Flat",
+  C_Flat: "C_Flat",
+  D_Flat: "D_Flat",
+  E_Flat: "E_Flat",
+  F_Flat: "F_Flat",
+  G_Flat: "G_Flat",
+  A_Sharp: "A_Sharp",
+  B_Sharp: "B_Sharp",
+  C_Sharp: "C_Sharp",
+  D_Sharp: "D_Sharp",
+  E_Sharp: "E_Sharp",
+  F_Sharp: "F_Sharp",
+  G_Sharp: "G_Sharp",
 };
 
 const {
@@ -111,3 +113,121 @@ export const sharpScales = {
   [F_Sharp]: [F_Sharp, G_Sharp, A_Sharp, B, C_Sharp, D_Sharp, E_Sharp],
   [C_Sharp]: [C_Sharp, D_Sharp, E_Sharp, F_Sharp, G_Sharp, A_Sharp, B_Sharp],
 }
+
+export const flatScaleConfigurations = {
+  [C]: createConfiguration(flatNotes, flatScales[C], [
+    {startFret: 0, endFret: 4},
+    {startFret: 2, endFret: 5},
+    {startFret: 4, endFret: 8},
+    {startFret: 7, endFret: 10},
+    {startFret: 9, endFret: 13},
+  ]),
+  [F]: createConfiguration(flatNotes, flatScales[F],  [
+    {startFret: 0, endFret: 4},
+    {startFret: 2, endFret: 6},
+    {startFret: 5, endFret: 8},
+    {startFret: 7, endFret: 10},
+    {startFret: 9, endFret: 13},
+  ]),
+  [B_Flat]: createConfiguration(flatNotes, flatScales[B_Flat], [
+    {startFret: 0, endFret: 4},
+    {startFret: 2, endFret: 6},
+    {startFret: 5, endFret: 8},
+    {startFret: 7, endFret: 11},
+    {startFret: 10, endFret: 13},
+  ]),
+  [E_Flat]: createConfiguration(flatNotes, flatScales[E_Flat], [
+    {startFret: 0, endFret: 4},
+    {startFret: 3, endFret: 6},
+    {startFret: 5, endFret: 8},
+    {startFret: 7, endFret: 11},
+    {startFret: 10, endFret: 13},
+  ]),
+  [A_Flat]: createConfiguration(flatNotes, flatScales[A_Flat], [
+    {startFret: 0, endFret: 4},
+    {startFret: 3, endFret: 6},
+    {startFret: 5, endFret: 9},
+    {startFret: 8, endFret: 11},
+    {startFret: 10, endFret: 13},
+  ]),
+  [D_Flat]: createConfiguration(flatNotes, flatScales[D_Flat],  [
+    {startFret: 0, endFret: 4},
+    {startFret: 3, endFret: 6},
+    {startFret: 5, endFret: 9},
+    {startFret: 8, endFret: 11},
+    {startFret: 10, endFret: 14},
+  ]),
+  [G_Flat]: createConfiguration(flatNotes,flatScales[G_Flat],[
+    {startFret: 0, endFret: 4},
+    {startFret: 3, endFret: 7},
+    {startFret: 6, endFret: 9},
+    {startFret: 8, endFret: 11},
+    {startFret: 10, endFret: 14},
+  ]),
+  [C_Flat]: createConfiguration(flatNotes, flatScales[C_Flat], [
+    {startFret: 0, endFret: 4},
+    {startFret: 3, endFret: 7},
+    {startFret: 6, endFret: 9},
+    {startFret: 8, endFret: 12},
+    {startFret: 11, endFret: 14},
+  ]),
+};
+
+export const sharpScaleConfigurations = {
+  [C]: createConfiguration(flatNotes, flatScales[C], [
+    {startFret: 2, endFret: 5},
+    {startFret: 4, endFret: 8},
+    {startFret: 7, endFret: 10},
+    {startFret: 9, endFret: 13},
+    {startFret: 12, endFret: 15},
+  ]),
+  [G]: createConfiguration(sharpNotes, sharpScales[G], [
+    {startFret: 2, endFret: 5},
+    {startFret: 4, endFret: 8},
+    {startFret: 7, endFret: 10},
+    {startFret: 9, endFret: 12},
+    {startFret: 11, endFret: 15},
+  ]),
+  [D]: createConfiguration(sharpNotes, sharpScales[D], [
+    {startFret: 2, endFret: 5},
+    {startFret: 4, endFret: 7},
+    {startFret: 6, endFret: 10},
+    {startFret: 9, endFret: 12},
+    {startFret: 11, endFret: 15},
+  ]),
+  [A]: createConfiguration(sharpNotes, sharpScales[A], [
+    {startFret: 1, endFret: 5},
+    {startFret: 4, endFret: 7},
+    {startFret: 6, endFret: 10},
+    {startFret: 9, endFret: 12},
+    {startFret: 11, endFret: 14},
+  ]),
+  [E]: createConfiguration(sharpNotes, sharpScales[E], [
+    {startFret: 1, endFret: 5},
+    {startFret: 4, endFret: 7},
+    {startFret: 6, endFret: 9},
+    {startFret: 8, endFret: 12},
+    {startFret: 11, endFret: 14},
+  ]),
+  [B]: createConfiguration(sharpNotes, sharpScales[B], [
+    {startFret: 1, endFret: 4},
+    {startFret: 3, endFret: 7},
+    {startFret: 6, endFret: 9},
+    {startFret: 8, endFret: 12},
+    {startFret: 11, endFret: 14},
+  ]),
+  [F_Sharp]: createConfiguration(sharpNotes, sharpScales[F_Sharp], [
+    {startFret: 1, endFret: 4},
+    {startFret: 3, endFret: 7},
+    {startFret: 6, endFret: 9},
+    {startFret: 8, endFret: 11},
+    {startFret: 10, endFret: 14},
+  ]),
+  [C_Sharp]: createConfiguration(sharpNotes, sharpScales[C_Sharp], [
+    {startFret: 1, endFret: 4},
+    {startFret: 3, endFret: 6},
+    {startFret: 5, endFret: 9},
+    {startFret: 8, endFret: 11},
+    {startFret: 10, endFret: 14},
+  ]),
+};
