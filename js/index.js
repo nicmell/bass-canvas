@@ -1,17 +1,17 @@
-import {flatNotes, flatScales, flatScaleConfigurations, sharpScaleConfigurations} from "./constants";
+import {flatNotes, flatScales, flatScaleConfigurations, sharpScaleConfigurations, positions} from "./constants";
 import {BassFretboard} from "./bassFretboard";
 import {noteName} from "./utils";
 
-
 function createBassFretboard(configurations, scaleKey, index) {
   const { canvasWidth, canvasHeight} = BassFretboard
-
-  const canvasElement = document.createElement("canvas")
-  canvasElement.id = [scaleKey, index + 1].join("-")
-  canvasElement.width = canvasWidth
-  canvasElement.height = canvasHeight
   const {scale, notes, openNotes, positions} = configurations[scaleKey]
   const {startFret, endFret, position} = positions[index]
+
+  const canvasElement = document.createElement("canvas")
+  canvasElement.id = [scaleKey, position].join("-")
+  canvasElement.width = canvasWidth
+  canvasElement.height = canvasHeight
+
   const fretboard = new BassFretboard({
     scale,
     notes,
@@ -24,25 +24,28 @@ function createBassFretboard(configurations, scaleKey, index) {
   return canvasElement
 }
 
+function appendScalesHead(parent) {
+  const {id: scaleKey} = parent
+  const span = document.createElement("span")
+  span.innerText = noteName(scaleKey);
+  parent.append(span);
+}
+
+function addendScales(parent, configurations) {
+  const {id: scaleKey} = parent
+  Object.keys(positions).forEach((_, index) => {
+    parent.append(createBassFretboard(configurations, scaleKey, index));
+  })
+}
 
 document.querySelectorAll(".scale.flat")
   .forEach((parent) => {
-    const {id: scaleKey} = parent
-    const span = document.createElement("span")
-    span.innerText = noteName(scaleKey);
-    parent.append(span);
-    [...Array(5).keys()].forEach((index) => {
-      parent.append(createBassFretboard(flatScaleConfigurations, scaleKey, index));
-    })
-});
+    appendScalesHead(parent);
+    addendScales(parent, flatScaleConfigurations);
+  });
 
 document.querySelectorAll(".scale.sharp")
   .forEach((parent) => {
-    const {id: scaleKey} = parent
-    const span = document.createElement("span")
-    span.innerText = noteName(scaleKey);
-    parent.append(span);
-    [...Array(5).keys()].forEach((index) => {
-      parent.append(createBassFretboard(sharpScaleConfigurations, scaleKey, index));
-    })
+    appendScalesHead(parent);
+    addendScales(parent, sharpScaleConfigurations);
   });

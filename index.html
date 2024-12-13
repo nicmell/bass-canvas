@@ -2,66 +2,70 @@
 <html class="no-js" lang="">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Electric bass positions</title>
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/paper.css">
-  <meta name="description" content="">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Electric bass positions</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/paper.css">
+    <meta name="description" content="">
 
-  <link rel="icon" href="/img/favicon.ico" sizes="any">
-  <link rel="icon" href="/img/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="img/icon.png">
+    <link rel="icon" href="/img/favicon.ico" sizes="any">
+    <link rel="icon" href="/img/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="img/icon.png">
 
-  <meta name="theme-color" content="#fafafa">
-  <style>
-    @page {
-      size: A4 landscape;
-    }
-    .sheet {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .scale {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      gap: 32px;
-    }
-    .scale > span {
-      min-width: 32px;
-      text-align: center;
-      font-size: 20px;
-    }
-    canvas {
-      border:1px solid black;
-      width: 164px;
-      height: 82px;
-    }
-  </style>
+    <meta name="theme-color" content="#fafafa">
+    <style>
+        @page {
+            size: A4 landscape;
+        }
+
+        .sheet {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .scale {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 32px;
+        }
+
+        .scale > span {
+            min-width: 32px;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        canvas {
+            border: 1px solid black;
+            width: 164px;
+            height: 82px;
+        }
+    </style>
 </head>
 
 <body class="A4 landscape">
 <section class="sheet padding-10mm">
-  <div class="scale flat" id="C"></div>
-  <div class="scale flat" id="F"></div>
-  <div class="scale flat" id="B_Flat"></div>
-  <div class="scale flat" id="E_Flat"></div>
-  <div class="scale flat" id="A_Flat"></div>
-  <div class="scale flat" id="D_Flat"></div>
-  <div class="scale flat" id="G_Flat"></div>
-  <div class="scale flat" id="C_Flat"></div>
+    <div class="scale flat" id="C"></div>
+    <div class="scale flat" id="F"></div>
+    <div class="scale flat" id="B_Flat"></div>
+    <div class="scale flat" id="E_Flat"></div>
+    <div class="scale flat" id="A_Flat"></div>
+    <div class="scale flat" id="D_Flat"></div>
+    <div class="scale flat" id="G_Flat"></div>
+    <div class="scale flat" id="C_Flat"></div>
 </section>
 <section class="sheet padding-10mm">
-  <div class="scale sharp" id="C"></div>
-  <div class="scale sharp" id="G"></div>
-  <div class="scale sharp" id="D"></div>
-  <div class="scale sharp" id="A"></div>
-  <div class="scale sharp" id="E"></div>
-  <div class="scale sharp" id="B"></div>
-  <div class="scale sharp" id="F_Sharp"></div>
-  <div class="scale sharp" id="C_Sharp"></div>
+    <div class="scale sharp" id="C"></div>
+    <div class="scale sharp" id="G"></div>
+    <div class="scale sharp" id="D"></div>
+    <div class="scale sharp" id="A"></div>
+    <div class="scale sharp" id="E"></div>
+    <div class="scale sharp" id="B"></div>
+    <div class="scale sharp" id="F_Sharp"></div>
+    <div class="scale sharp" id="C_Sharp"></div>
 </section>
 </body>
 </html>
