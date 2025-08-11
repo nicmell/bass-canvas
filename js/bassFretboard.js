@@ -138,7 +138,7 @@ export class BassFretboard {
 
         if (scale.includes(note)) {
           const x = (fret - startFret + 0.5) * fretWidth;
-          const y = string * fretHeight + fretHeight / 2;
+          const y = (stringCount - string + 1) * fretHeight + fretHeight / 2;
 
           ctx.beginPath();
           ctx.arc(x, y, 12, 0, Math.PI * 2);
