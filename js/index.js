@@ -1,4 +1,4 @@
-import {flatScaleConfigurations, sharpScaleConfigurations, positions} from "./constants";
+import {flatScaleConfigurations, sharpScaleConfigurations, modes} from "./constants";
 import {BassFretboard} from "./bassFretboard";
 import {noteName} from "./utils";
 
@@ -35,7 +35,7 @@ function appendScalesHead(parent) {
 
 function addendScales(parent, configurations) {
     const {id: scaleKey} = parent
-    Object.keys(positions).forEach((_, index) => {
+    Object.keys(modes).forEach((_, index) => {
         parent.append(createBassFretboard(configurations, scaleKey, index));
     })
 }
