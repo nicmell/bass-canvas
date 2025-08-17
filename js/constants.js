@@ -1,11 +1,13 @@
 import {createConfiguration} from "./utils";
 
 export const modes = {
-    Phrygian: 'Phrygian',
-    Mixolydian: 'Mixolydian',
-    Minor: 'Minor',
-    Major: 'Major',
-    Dorian: 'Dorian'
+    Major:      'I - Ionian (Major)',
+    Dorian:     'II - Dorian',
+    Phrygian:   'III - Phrygian',
+    // Lydian: 'IV - Lydian',
+    Mixolydian: 'V - Mixolydian',
+    Minor:      'VI - Aeolian (Minor)',
+    // Locrian: 'VII - Locrian',
 }
 
 const {
@@ -17,26 +19,26 @@ const {
 } = modes
 
 export const colors = {
-    [Phrygian]: {
+    [Major]: {
         light: '#FFEBEB',
         dark: '#FFB8B8'
     },
-    [Mixolydian]: {
+    [Minor]: {
         light: '#E5F0FC',
         dark: '#AAD1FB'
     },
-    [Minor]: {
+    [Mixolydian]: {
+        light: '#EDE7FF',
+        dark: '#CFBFFF'
+    },
+    [Dorian]: {
         light: '#DEF8D8',
         dark: '#A3E493'
     },
-    [Major]: {
+    [Phrygian]: {
         light: '#FFF0B3',
         dark: '#FFBF69'
     },
-    [Dorian]: {
-        light: '#EDE7FF',
-        dark: '#CFBFFF'
-    }
 }
 
 
@@ -156,119 +158,119 @@ export const sharpScales = {
 
 export const flatScaleConfigurations = {
     [C]: createConfiguration(flatNotes, flatScales[C], [
-        {startFret: 0, endFret: 4, position: Phrygian},
-        {startFret: 2, endFret: 5, position: Mixolydian},
-        {startFret: 4, endFret: 8, position: Minor},
-        {startFret: 7, endFret: 10, position: Major},
-        {startFret: 9, endFret: 13, position: Dorian},
+        {startFret: 0, endFret: 4, mode: Phrygian},
+        {startFret: 2, endFret: 5, mode: Mixolydian},
+        {startFret: 4, endFret: 8, mode: Minor},
+        {startFret: 7, endFret: 10, mode: Major},
+        {startFret: 9, endFret: 13, mode: Dorian},
     ]),
     [F]: createConfiguration(flatNotes, flatScales[F], [
-        {startFret: 0, endFret: 4, position: Major},
-        {startFret: 2, endFret: 6, position: Dorian},
-        {startFret: 5, endFret: 8, position: Phrygian},
-        {startFret: 7, endFret: 10, position: Mixolydian},
-        {startFret: 9, endFret: 13, position: Minor},
+        {startFret: 0, endFret: 4, mode: Major},
+        {startFret: 2, endFret: 6, mode: Dorian},
+        {startFret: 5, endFret: 8, mode: Phrygian},
+        {startFret: 7, endFret: 10, mode: Mixolydian},
+        {startFret: 9, endFret: 13, mode: Minor},
     ]),
     [B_Flat]: createConfiguration(flatNotes, flatScales[B_Flat], [
-        {startFret: 0, endFret: 4, position: Mixolydian},
-        {startFret: 2, endFret: 6, position: Minor},
-        {startFret: 5, endFret: 8, position: Major},
-        {startFret: 7, endFret: 11, position: Dorian},
-        {startFret: 10, endFret: 13, position: Phrygian},
+        {startFret: 0, endFret: 4, mode: Mixolydian},
+        {startFret: 2, endFret: 6, mode: Minor},
+        {startFret: 5, endFret: 8, mode: Major},
+        {startFret: 7, endFret: 11, mode: Dorian},
+        {startFret: 10, endFret: 13, mode: Phrygian},
     ]),
     [E_Flat]: createConfiguration(flatNotes, flatScales[E_Flat], [
-        {startFret: 0, endFret: 4, position: Dorian},
-        {startFret: 3, endFret: 6, position: Phrygian},
-        {startFret: 5, endFret: 8, position: Mixolydian},
-        {startFret: 7, endFret: 11, position: Minor},
-        {startFret: 10, endFret: 13, position: Major},
+        {startFret: 0, endFret: 4, mode: Dorian},
+        {startFret: 3, endFret: 6, mode: Phrygian},
+        {startFret: 5, endFret: 8, mode: Mixolydian},
+        {startFret: 7, endFret: 11, mode: Minor},
+        {startFret: 10, endFret: 13, mode: Major},
     ]),
     [A_Flat]: createConfiguration(flatNotes, flatScales[A_Flat], [
-        {startFret: 0, endFret: 4, position: Minor},
-        {startFret: 3, endFret: 6, position: Major},
-        {startFret: 5, endFret: 9, position: Dorian},
-        {startFret: 8, endFret: 11, position: Phrygian},
-        {startFret: 10, endFret: 13, position: Mixolydian},
+        {startFret: 0, endFret: 4, mode: Minor},
+        {startFret: 3, endFret: 6, mode: Major},
+        {startFret: 5, endFret: 9, mode: Dorian},
+        {startFret: 8, endFret: 11, mode: Phrygian},
+        {startFret: 10, endFret: 13, mode: Mixolydian},
     ]),
     [D_Flat]: createConfiguration(flatNotes, flatScales[D_Flat], [
-        {startFret: 0, endFret: 4, position: Phrygian},
-        {startFret: 3, endFret: 6, position: Mixolydian},
-        {startFret: 5, endFret: 9, position: Minor},
-        {startFret: 8, endFret: 11, position: Major},
-        {startFret: 10, endFret: 14, position: Dorian},
+        {startFret: 0, endFret: 4, mode: Phrygian},
+        {startFret: 3, endFret: 6, mode: Mixolydian},
+        {startFret: 5, endFret: 9, mode: Minor},
+        {startFret: 8, endFret: 11, mode: Major},
+        {startFret: 10, endFret: 14, mode: Dorian},
     ]),
     [G_Flat]: createConfiguration(flatNotes, flatScales[G_Flat], [
-        {startFret: 0, endFret: 4, position: Major},
-        {startFret: 3, endFret: 7, position: Dorian},
-        {startFret: 6, endFret: 9, position: Phrygian},
-        {startFret: 8, endFret: 11, position: Mixolydian},
-        {startFret: 10, endFret: 14, position: Minor},
+        {startFret: 0, endFret: 4, mode: Major},
+        {startFret: 3, endFret: 7, mode: Dorian},
+        {startFret: 6, endFret: 9, mode: Phrygian},
+        {startFret: 8, endFret: 11, mode: Mixolydian},
+        {startFret: 10, endFret: 14, mode: Minor},
     ]),
     [C_Flat]: createConfiguration(flatNotes, flatScales[C_Flat], [
-        {startFret: 0, endFret: 4, position: Mixolydian},
-        {startFret: 3, endFret: 7, position: Minor},
-        {startFret: 6, endFret: 9, position: Major},
-        {startFret: 8, endFret: 12, position: Dorian},
-        {startFret: 11, endFret: 14, position: Phrygian},
+        {startFret: 0, endFret: 4, mode: Mixolydian},
+        {startFret: 3, endFret: 7, mode: Minor},
+        {startFret: 6, endFret: 9, mode: Major},
+        {startFret: 8, endFret: 12, mode: Dorian},
+        {startFret: 11, endFret: 14, mode: Phrygian},
     ]),
 };
 
 export const sharpScaleConfigurations = {
     [C]: createConfiguration(flatNotes, flatScales[C], [
-        {startFret: 2, endFret: 5, position: Mixolydian},
-        {startFret: 4, endFret: 8, position: Minor},
-        {startFret: 7, endFret: 10, position: Major},
-        {startFret: 9, endFret: 13, position: Dorian},
-        {startFret: 12, endFret: 15, position: Phrygian},
+        {startFret: 2, endFret: 5, mode: Mixolydian},
+        {startFret: 4, endFret: 8, mode: Minor},
+        {startFret: 7, endFret: 10, mode: Major},
+        {startFret: 9, endFret: 13, mode: Dorian},
+        {startFret: 12, endFret: 15, mode: Phrygian},
     ]),
     [G]: createConfiguration(sharpNotes, sharpScales[G], [
-        {startFret: 2, endFret: 5, position: Major},
-        {startFret: 4, endFret: 8, position: Dorian},
-        {startFret: 7, endFret: 10, position: Phrygian},
-        {startFret: 9, endFret: 12, position: Mixolydian},
-        {startFret: 11, endFret: 15, position: Minor},
+        {startFret: 2, endFret: 5, mode: Major},
+        {startFret: 4, endFret: 8, mode: Dorian},
+        {startFret: 7, endFret: 10, mode: Phrygian},
+        {startFret: 9, endFret: 12, mode: Mixolydian},
+        {startFret: 11, endFret: 15, mode: Minor},
     ]),
     [D]: createConfiguration(sharpNotes, sharpScales[D], [
-        {startFret: 2, endFret: 5, position: Phrygian},
-        {startFret: 4, endFret: 7, position: Mixolydian},
-        {startFret: 6, endFret: 10, position: Minor},
-        {startFret: 9, endFret: 12, position: Major},
-        {startFret: 11, endFret: 15, position: Dorian},
+        {startFret: 2, endFret: 5, mode: Phrygian},
+        {startFret: 4, endFret: 7, mode: Mixolydian},
+        {startFret: 6, endFret: 10, mode: Minor},
+        {startFret: 9, endFret: 12, mode: Major},
+        {startFret: 11, endFret: 15, mode: Dorian},
     ]),
     [A]: createConfiguration(sharpNotes, sharpScales[A], [
-        {startFret: 1, endFret: 5, position: Minor},
-        {startFret: 4, endFret: 7, position: Major},
-        {startFret: 6, endFret: 10, position: Dorian},
-        {startFret: 9, endFret: 12, position: Phrygian},
-        {startFret: 11, endFret: 14, position: Mixolydian},
+        {startFret: 1, endFret: 5, mode: Minor},
+        {startFret: 4, endFret: 7, mode: Major},
+        {startFret: 6, endFret: 10, mode: Dorian},
+        {startFret: 9, endFret: 12, mode: Phrygian},
+        {startFret: 11, endFret: 14, mode: Mixolydian},
     ]),
     [E]: createConfiguration(sharpNotes, sharpScales[E], [
-        {startFret: 1, endFret: 5, position: Dorian},
-        {startFret: 4, endFret: 7, position: Phrygian},
-        {startFret: 6, endFret: 9, position: Mixolydian},
-        {startFret: 8, endFret: 12, position: Minor},
-        {startFret: 11, endFret: 14, position: Major},
+        {startFret: 1, endFret: 5, mode: Dorian},
+        {startFret: 4, endFret: 7, mode: Phrygian},
+        {startFret: 6, endFret: 9, mode: Mixolydian},
+        {startFret: 8, endFret: 12, mode: Minor},
+        {startFret: 11, endFret: 14, mode: Major},
     ]),
     [B]: createConfiguration(sharpNotes, sharpScales[B], [
-        {startFret: 1, endFret: 4, position: Mixolydian},
-        {startFret: 3, endFret: 7, position: Minor},
-        {startFret: 6, endFret: 9, position: Major},
-        {startFret: 8, endFret: 12, position: Dorian},
-        {startFret: 11, endFret: 14, position: Phrygian},
+        {startFret: 1, endFret: 4, mode: Mixolydian},
+        {startFret: 3, endFret: 7, mode: Minor},
+        {startFret: 6, endFret: 9, mode: Major},
+        {startFret: 8, endFret: 12, mode: Dorian},
+        {startFret: 11, endFret: 14, mode: Phrygian},
     ]),
     [F_Sharp]: createConfiguration(sharpNotes, sharpScales[F_Sharp], [
-        {startFret: 1, endFret: 4, position: Major},
-        {startFret: 3, endFret: 7, position: Dorian},
-        {startFret: 6, endFret: 9, position: Phrygian},
-        {startFret: 8, endFret: 11, position: Mixolydian},
-        {startFret: 10, endFret: 14, position: Minor},
+        {startFret: 1, endFret: 4, mode: Major},
+        {startFret: 3, endFret: 7, mode: Dorian},
+        {startFret: 6, endFret: 9, mode: Phrygian},
+        {startFret: 8, endFret: 11, mode: Mixolydian},
+        {startFret: 10, endFret: 14, mode: Minor},
     ]),
     [C_Sharp]: createConfiguration(sharpNotes, sharpScales[C_Sharp], [
-        {startFret: 1, endFret: 4, position: Phrygian},
-        {startFret: 3, endFret: 6, position: Mixolydian},
-        {startFret: 5, endFret: 9, position: Minor},
-        {startFret: 8, endFret: 11, position: Major},
-        {startFret: 10, endFret: 14, position: Dorian},
+        {startFret: 1, endFret: 4, mode: Phrygian},
+        {startFret: 3, endFret: 6, mode: Mixolydian},
+        {startFret: 5, endFret: 9, mode: Minor},
+        {startFret: 8, endFret: 11, mode: Major},
+        {startFret: 10, endFret: 14, mode: Dorian},
     ]),
 };
 

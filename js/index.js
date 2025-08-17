@@ -2,15 +2,19 @@ import {flatScaleConfigurations, sharpScaleConfigurations, modes} from "./consta
 import {BassFretboard} from "./bassFretboard";
 import {noteName} from "./utils";
 
-function createBassFretboard(configurations, scaleKey, index) {
-    const {scale, notes, openNotes, positions} = configurations[scaleKey]
-    const {startFret, endFret, position} = positions[index]
-
+function getCanvasElement(scaleKey, mode) {
     const canvasElement = document.createElement("canvas")
     const {canvasWidth, canvasHeight} = BassFretboard
-    canvasElement.id = [scaleKey, position].join("-")
+    canvasElement.id = [scaleKey, mode].join("-")
     canvasElement.width = canvasWidth
     canvasElement.height = canvasHeight
+    return canvasElement;
+}
+
+function createBassFretboard(configurations, scaleKey, index) {
+    const {scale, notes, openNotes, modes} = configurations[scaleKey]
+    const {startFret, endFret, mode} = modes[index]
+    const canvasElement = getCanvasElement(scaleKey, mode);
 
     BassFretboard.draw(
         canvasElement.getContext("2d"),
@@ -20,7 +24,7 @@ function createBassFretboard(configurations, scaleKey, index) {
             openNotes,
             startFret,
             endFret,
-            position
+            mode
         })
 
     return canvasElement

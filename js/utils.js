@@ -7,12 +7,12 @@ export const adaptNotesForScale = (notes, scale) => {
   }, notes);
 }
 
-export const createConfiguration = (notes, scale, positions) => {
+export const createConfiguration = (notes, scale, modes) => {
   return {
     notes: adaptNotesForScale(notes, scale),
     openNotes: adaptNotesForScale(openNotes, scale),
     scale,
-    positions,
+    modes,
   }
 }
 
