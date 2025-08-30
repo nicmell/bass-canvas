@@ -4,16 +4,16 @@ import {noteName} from "./utils";
 
 function getCanvasElement(scaleKey, mode) {
     const canvasElement = document.createElement("canvas")
-    const {canvasWidth, canvasHeight} = BassFretboard
-    canvasElement.id = [scaleKey, mode].join("-")
-    canvasElement.width = canvasWidth
-    canvasElement.height = canvasHeight
+    const {canvasWidth, canvasHeight} = BassFretboard;
+    canvasElement.id = [scaleKey, mode].join("-");
+    canvasElement.width = canvasWidth;
+    canvasElement.height = canvasHeight;
     return canvasElement;
 }
 
 function createBassFretboard(configurations, scaleKey, index) {
-    const {scale, notes, openNotes, modes} = configurations[scaleKey]
-    const {startFret, endFret, mode} = modes[index]
+    const {scale, notes, openNotes, modes} = configurations[scaleKey];
+    const {startFret, endFret, mode} = modes[index];
     const canvasElement = getCanvasElement(scaleKey, mode);
 
     BassFretboard.draw(
@@ -54,4 +54,28 @@ document.querySelectorAll(".scale.sharp")
     .forEach((parent) => {
         appendScalesHead(parent);
         addendScales(parent, sharpScaleConfigurations);
+    });
+
+
+document.querySelectorAll(".tmp")
+    .forEach((parent) => {
+        const canvasElement = document.createElement("canvas");
+        canvasElement.width = parent.clientWidth;
+        canvasElement.height = 150;
+
+        const scaleKey = "C"
+        const mode = "Major"
+        const {scale, notes, openNotes, modes} = flatScaleConfigurations[scaleKey];
+
+        BassFretboard.draw(
+            canvasElement.getContext("2d"),
+            {
+                scale,
+                notes,
+                openNotes,
+                startFret: 0,
+                endFret: 12,
+                modes: modes.Major
+            })
+        parent.append(canvasElement);
     });

@@ -14,7 +14,6 @@ export class BassFretboard {
                     mode,
                     stringCount = 4,
                 }) {
-        const {canvasWidth, canvasHeight} = BassFretboard
 
         this.notes = notes;
         this.openNotes = openNotes;
@@ -24,13 +23,22 @@ export class BassFretboard {
         this.stringCount = stringCount;
 
         this.fretCount = endFret - startFret + 1;
-        this.fretWidth = canvasWidth / this.fretCount;
-        this.fretHeight = canvasHeight / (stringCount + 1);
 
         this.emptyFretCount = Math.max(startFret, 1) - startFret
-        this.fretboardOffset = this.fretWidth * this.emptyFretCount
 
         this.mode = mode
+    }
+
+    fretWidth(ctx) {
+        return ctx.canvas.width / this.fretCount;
+    }
+
+    fretHeight(ctx) {
+        return ctx.canvas.height / (this.stringCount + 1);
+    }
+
+    fretboardOffset(ctx) {
+        return this.fretWidth(ctx) * this.emptyFretCount
     }
 
     calculateNoteOnFret(string, fret) {
@@ -41,23 +49,23 @@ export class BassFretboard {
     }
 
     drawFretboardBackground(ctx) {
-        const {fretHeight, fretboardOffset} = this
-        const {canvasWidth, canvasHeight} = BassFretboard
+        const fretHeight = this.fretHeight(ctx)
+        const fretboardOffset = this.fretboardOffset(ctx)
 
         ctx.fillStyle = "#f0e4d7";
-        ctx.fillRect(fretboardOffset, fretHeight, canvasWidth, canvasHeight - fretHeight);
+        ctx.fillRect(fretboardOffset, fretHeight, ctx.canvas.width, ctx.canvas.height - fretHeight);
     }
 
     drawFretLines(ctx) {
-        const {fretWidth, fretHeight, fretCount, emptyFretCount} = this;
-        const {canvasHeight} = BassFretboard
-
+        const {fretCount, emptyFretCount} = this;
+        const fretWidth = this.fretWidth(ctx)
+        const fretHeight = this.fretHeight(ctx)
 
         for (let i = emptyFretCount; i <= fretCount; i++) {
             const x = i * fretWidth;
             ctx.beginPath();
             ctx.moveTo(x, fretHeight);
-            ctx.lineTo(x, canvasHeight);
+            ctx.lineTo(x, ctx.canvas.height);
             ctx.strokeStyle = "#000";
             ctx.lineWidth = 1;
             ctx.stroke();
@@ -65,15 +73,16 @@ export class BassFretboard {
     }
 
     drawStrings(ctx) {
-        const {stringCount, fretHeight, fretboardOffset} = this;
-        const {canvasWidth} = BassFretboard
+        const {stringCount} = this;
 
+        const fretHeight = this.fretHeight(ctx)
+        const fretboardOffset = this.fretboardOffset(ctx)
 
         for (let i = 0; i <= stringCount; i++) {
             const y = (i + 1) * fretHeight;
             ctx.beginPath();
             ctx.moveTo(fretboardOffset, y);
-            ctx.lineTo(canvasWidth, y);
+            ctx.lineTo(ctx.canvas.width, y);
             ctx.strokeStyle = "#000";
             ctx.lineWidth = 1;
             ctx.stroke();
@@ -82,13 +91,14 @@ export class BassFretboard {
 
     drawFretMarkers(ctx) {
         const fretMarkers = [3, 5, 7, 9, 15, 17, 19];
-        const {fretCount, startFret, fretWidth, fretHeight} = this;
-        const {canvasHeight} = BassFretboard
+        const {fretCount, startFret} = this;
+        const fretWidth = this.fretWidth(ctx)
+        const fretHeight = this.fretHeight(ctx)
 
         for (let i = 0; i < fretCount; i++) {
             const fretNum = startFret + i;
             const x = (i + 0.5) * fretWidth;
-            const y = fretHeight + (canvasHeight - fretHeight) / 2;
+            const y = fretHeight + (ctx.canvas.height - fretHeight) / 2;
 
             if (fretNum >= 1 && fretMarkers.includes(fretNum)) {
                 ctx.beginPath();
@@ -109,7 +119,10 @@ export class BassFretboard {
     }
 
     drawFretHeaders(ctx) {
-        const {fretCount, startFret, fretWidth, fretHeight} = this;
+        const {fretCount, startFret} = this;
+        const fretWidth = this.fretWidth(ctx)
+        const fretHeight = this.fretHeight(ctx)
+
         const headerY = fretHeight / 2;
 
         ctx.font = "16px Arial";
@@ -127,7 +140,9 @@ export class BassFretboard {
     }
 
     drawScaleNotes(ctx) {
-        const {stringCount, startFret, fretCount, fretWidth, fretHeight, scale, mode} = this;
+        const {stringCount, startFret, fretCount, scale, mode} = this;
+        const fretWidth = this.fretWidth(ctx)
+        const fretHeight = this.fretHeight(ctx)
 
         ctx.font = "12px Arial";
         ctx.textAlign = "center";
