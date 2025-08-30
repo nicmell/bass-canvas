@@ -38,15 +38,57 @@
             font-size: 20px;
         }
 
-        canvas {
-            border: 1px solid black;
+        .scale > canvas {
             width: 164px;
             height: 82px;
         }
+
+        .scale-full {
+            border: 1px solid black;
+            display: flex;
+            flex-direction: row;
+            padding: 16px;
+        }
+
+        .scale-full > span {
+            min-width: 160px;
+            text-align: left;
+            font-size: 16px;
+        }
+
+        .scale-full > canvas {
+            height: 100px;
+            flex-grow: 1;
+        }
+
+        .circle-of-fifths {
+            flex-basis: 50%;
+        }
+
     </style>
 </head>
 
 <body class="A4 landscape">
+<section class="sheet padding-10mm">
+    <div style="height: 100%; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 16px">
+        <div class="circle-of-fifths">
+            <img src="img/circle-of-fifhts-major.svg"/>
+        </div>
+        <div class="circle-of-fifths">
+            <img src="img/circle-of-fifhts-minor.svg"/>
+        </div>
+    </div>
+</section>
+
+<section class="sheet padding-10mm">
+    <div class="tmp"></div>
+    <div class="scale-full sharp" id="C-Mixolydian"></div>
+    <div class="scale-full sharp" id="C-Aeolian"></div>
+    <div class="scale-full sharp" id="C-Ionian"></div>
+    <div class="scale-full sharp" id="C-Dorian"></div>
+    <div class="scale-full sharp" id="C-Phrygian"></div>
+</section>
+
 <section class="sheet padding-10mm">
     <div class="scale flat" id="C"></div>
     <div class="scale flat" id="F"></div>

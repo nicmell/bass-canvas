@@ -1,29 +1,29 @@
 import {createConfiguration} from "./utils";
 
 export const modes = {
-    Major:      'I - Ionian (Major)',
-    Dorian:     'II - Dorian',
-    Phrygian:   'III - Phrygian',
+    Ionian: 'Ionian',
+    Dorian: 'Dorian',
+    Phrygian: 'Phrygian',
     // Lydian: 'IV - Lydian',
-    Mixolydian: 'V - Mixolydian',
-    Minor:      'VI - Aeolian (Minor)',
+    Mixolydian: 'Mixolydian',
+    Aeolian: 'Aeolian',
     // Locrian: 'VII - Locrian',
 }
 
 const {
+    Ionian,
+    Dorian,
     Phrygian,
     Mixolydian,
-    Minor,
-    Major,
-    Dorian,
+    Aeolian,
 } = modes
 
 export const colors = {
-    [Major]: {
+    [Ionian]: {
         light: '#FFEBEB',
         dark: '#FFB8B8'
     },
-    [Minor]: {
+    [Aeolian]: {
         light: '#E5F0FC',
         dark: '#AAD1FB'
     },
@@ -160,21 +160,21 @@ export const flatScaleConfigurations = {
     [C]: createConfiguration(flatNotes, flatScales[C], [
         {startFret: 0, endFret: 4, mode: Phrygian},
         {startFret: 2, endFret: 5, mode: Mixolydian},
-        {startFret: 4, endFret: 8, mode: Minor},
-        {startFret: 7, endFret: 10, mode: Major},
+        {startFret: 4, endFret: 8, mode: Aeolian},
+        {startFret: 7, endFret: 10, mode: Ionian},
         {startFret: 9, endFret: 13, mode: Dorian},
     ]),
     [F]: createConfiguration(flatNotes, flatScales[F], [
-        {startFret: 0, endFret: 4, mode: Major},
+        {startFret: 0, endFret: 4, mode: Ionian},
         {startFret: 2, endFret: 6, mode: Dorian},
         {startFret: 5, endFret: 8, mode: Phrygian},
         {startFret: 7, endFret: 10, mode: Mixolydian},
-        {startFret: 9, endFret: 13, mode: Minor},
+        {startFret: 9, endFret: 13, mode: Aeolian},
     ]),
     [B_Flat]: createConfiguration(flatNotes, flatScales[B_Flat], [
         {startFret: 0, endFret: 4, mode: Mixolydian},
-        {startFret: 2, endFret: 6, mode: Minor},
-        {startFret: 5, endFret: 8, mode: Major},
+        {startFret: 2, endFret: 6, mode: Aeolian},
+        {startFret: 5, endFret: 8, mode: Ionian},
         {startFret: 7, endFret: 11, mode: Dorian},
         {startFret: 10, endFret: 13, mode: Phrygian},
     ]),
@@ -182,12 +182,12 @@ export const flatScaleConfigurations = {
         {startFret: 0, endFret: 4, mode: Dorian},
         {startFret: 3, endFret: 6, mode: Phrygian},
         {startFret: 5, endFret: 8, mode: Mixolydian},
-        {startFret: 7, endFret: 11, mode: Minor},
-        {startFret: 10, endFret: 13, mode: Major},
+        {startFret: 7, endFret: 11, mode: Aeolian},
+        {startFret: 10, endFret: 13, mode: Ionian},
     ]),
     [A_Flat]: createConfiguration(flatNotes, flatScales[A_Flat], [
-        {startFret: 0, endFret: 4, mode: Minor},
-        {startFret: 3, endFret: 6, mode: Major},
+        {startFret: 0, endFret: 4, mode: Aeolian},
+        {startFret: 3, endFret: 6, mode: Ionian},
         {startFret: 5, endFret: 9, mode: Dorian},
         {startFret: 8, endFret: 11, mode: Phrygian},
         {startFret: 10, endFret: 13, mode: Mixolydian},
@@ -195,21 +195,21 @@ export const flatScaleConfigurations = {
     [D_Flat]: createConfiguration(flatNotes, flatScales[D_Flat], [
         {startFret: 0, endFret: 4, mode: Phrygian},
         {startFret: 3, endFret: 6, mode: Mixolydian},
-        {startFret: 5, endFret: 9, mode: Minor},
-        {startFret: 8, endFret: 11, mode: Major},
+        {startFret: 5, endFret: 9, mode: Aeolian},
+        {startFret: 8, endFret: 11, mode: Ionian},
         {startFret: 10, endFret: 14, mode: Dorian},
     ]),
     [G_Flat]: createConfiguration(flatNotes, flatScales[G_Flat], [
-        {startFret: 0, endFret: 4, mode: Major},
+        {startFret: 0, endFret: 4, mode: Ionian},
         {startFret: 3, endFret: 7, mode: Dorian},
         {startFret: 6, endFret: 9, mode: Phrygian},
         {startFret: 8, endFret: 11, mode: Mixolydian},
-        {startFret: 10, endFret: 14, mode: Minor},
+        {startFret: 10, endFret: 14, mode: Aeolian},
     ]),
     [C_Flat]: createConfiguration(flatNotes, flatScales[C_Flat], [
         {startFret: 0, endFret: 4, mode: Mixolydian},
-        {startFret: 3, endFret: 7, mode: Minor},
-        {startFret: 6, endFret: 9, mode: Major},
+        {startFret: 3, endFret: 7, mode: Aeolian},
+        {startFret: 6, endFret: 9, mode: Ionian},
         {startFret: 8, endFret: 12, mode: Dorian},
         {startFret: 11, endFret: 14, mode: Phrygian},
     ]),
@@ -218,28 +218,28 @@ export const flatScaleConfigurations = {
 export const sharpScaleConfigurations = {
     [C]: createConfiguration(flatNotes, flatScales[C], [
         {startFret: 2, endFret: 5, mode: Mixolydian},
-        {startFret: 4, endFret: 8, mode: Minor},
-        {startFret: 7, endFret: 10, mode: Major},
+        {startFret: 4, endFret: 8, mode: Aeolian},
+        {startFret: 7, endFret: 10, mode: Ionian},
         {startFret: 9, endFret: 13, mode: Dorian},
         {startFret: 12, endFret: 15, mode: Phrygian},
     ]),
     [G]: createConfiguration(sharpNotes, sharpScales[G], [
-        {startFret: 2, endFret: 5, mode: Major},
+        {startFret: 2, endFret: 5, mode: Ionian},
         {startFret: 4, endFret: 8, mode: Dorian},
         {startFret: 7, endFret: 10, mode: Phrygian},
         {startFret: 9, endFret: 12, mode: Mixolydian},
-        {startFret: 11, endFret: 15, mode: Minor},
+        {startFret: 11, endFret: 15, mode: Aeolian},
     ]),
     [D]: createConfiguration(sharpNotes, sharpScales[D], [
         {startFret: 2, endFret: 5, mode: Phrygian},
         {startFret: 4, endFret: 7, mode: Mixolydian},
-        {startFret: 6, endFret: 10, mode: Minor},
-        {startFret: 9, endFret: 12, mode: Major},
+        {startFret: 6, endFret: 10, mode: Aeolian},
+        {startFret: 9, endFret: 12, mode: Ionian},
         {startFret: 11, endFret: 15, mode: Dorian},
     ]),
     [A]: createConfiguration(sharpNotes, sharpScales[A], [
-        {startFret: 1, endFret: 5, mode: Minor},
-        {startFret: 4, endFret: 7, mode: Major},
+        {startFret: 1, endFret: 5, mode: Aeolian},
+        {startFret: 4, endFret: 7, mode: Ionian},
         {startFret: 6, endFret: 10, mode: Dorian},
         {startFret: 9, endFret: 12, mode: Phrygian},
         {startFret: 11, endFret: 14, mode: Mixolydian},
@@ -248,28 +248,28 @@ export const sharpScaleConfigurations = {
         {startFret: 1, endFret: 5, mode: Dorian},
         {startFret: 4, endFret: 7, mode: Phrygian},
         {startFret: 6, endFret: 9, mode: Mixolydian},
-        {startFret: 8, endFret: 12, mode: Minor},
-        {startFret: 11, endFret: 14, mode: Major},
+        {startFret: 8, endFret: 12, mode: Aeolian},
+        {startFret: 11, endFret: 14, mode: Ionian},
     ]),
     [B]: createConfiguration(sharpNotes, sharpScales[B], [
         {startFret: 1, endFret: 4, mode: Mixolydian},
-        {startFret: 3, endFret: 7, mode: Minor},
-        {startFret: 6, endFret: 9, mode: Major},
+        {startFret: 3, endFret: 7, mode: Aeolian},
+        {startFret: 6, endFret: 9, mode: Ionian},
         {startFret: 8, endFret: 12, mode: Dorian},
         {startFret: 11, endFret: 14, mode: Phrygian},
     ]),
     [F_Sharp]: createConfiguration(sharpNotes, sharpScales[F_Sharp], [
-        {startFret: 1, endFret: 4, mode: Major},
+        {startFret: 1, endFret: 4, mode: Ionian},
         {startFret: 3, endFret: 7, mode: Dorian},
         {startFret: 6, endFret: 9, mode: Phrygian},
         {startFret: 8, endFret: 11, mode: Mixolydian},
-        {startFret: 10, endFret: 14, mode: Minor},
+        {startFret: 10, endFret: 14, mode: Aeolian},
     ]),
     [C_Sharp]: createConfiguration(sharpNotes, sharpScales[C_Sharp], [
         {startFret: 1, endFret: 4, mode: Phrygian},
         {startFret: 3, endFret: 6, mode: Mixolydian},
-        {startFret: 5, endFret: 9, mode: Minor},
-        {startFret: 8, endFret: 11, mode: Major},
+        {startFret: 5, endFret: 9, mode: Aeolian},
+        {startFret: 8, endFret: 11, mode: Ionian},
         {startFret: 10, endFret: 14, mode: Dorian},
     ]),
 };

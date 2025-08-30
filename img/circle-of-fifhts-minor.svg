@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="-200 -200 400 400" xmlns="http://www.w3.org/2000/svg">
+    <!-- Cerchio esterno -->
+    <circle cx="0" cy="0" r="150" fill="none" stroke="black" stroke-width="1"/>
+
+    <!-- Raggi dal centro verso la circonferenza -->
+    <g stroke="black" stroke-width="0.5">
+        <!-- Raggio base -->
+        <line x1="0" y1="0" x2="0" y2="-150"/>
+        <!-- Altri 11 raggi ruotati -->
+        <g transform="rotate(30)">
+            <line x1="0" y1="0" x2="0" y2="-150"/>
+        </g>
+        <g transform="rotate(60)">
+            <line x1="0" y1="0" x2="0" y2="-150"/>
+        </g>
+        <g transform="rotate(90)">
+            <line x1="0" y1="0" x2="0" y2="-150"/>
+        </g>
+        <g transform="rotate(120)">
+            <line x1="0" y1="0" x2="0" y2="-150"/>
+        </g>
+        <g transform="rotate(150)">
+            <line x1="0" y1="0" x2="0" y2="-150"/>
+        </g>
+        <g transform="rotate(180)">
+            <line x1="0" y1="0" x2="0" y2="-150"/>
+        </g>
+        <g transform="rotate(210)">
+            <line x1="0" y1="0" x2="0" y2="-150"/>
+        </g>
+        <g transform="rotate(240)">
+            <line x1="0" y1="0" x2="0" y2="-150"/>
+        </g>
+        <g transform="rotate(270)">
+            <line x1="0" y1="0" x2="0" y2="-150"/>
+        </g>
+        <g transform="rotate(300)">
+            <line x1="0" y1="0" x2="0" y2="-150"/>
+        </g>
+        <g transform="rotate(330)">
+            <line x1="0" y1="0" x2="0" y2="-150"/>
+        </g>
+    </g>
+
+    <!-- Punti di intersezione -->
+    <g>
+        <circle cx="0" cy="-150" r="3" fill="black"/>
+        <g transform="rotate(30)">
+            <circle cx="0" cy="-150" r="3" fill="black"/>
+        </g>
+        <g transform="rotate(60)">
+            <circle cx="0" cy="-150" r="3" fill="black"/>
+        </g>
+        <g transform="rotate(90)">
+            <circle cx="0" cy="-150" r="3" fill="black"/>
+        </g>
+        <g transform="rotate(120)">
+            <circle cx="0" cy="-150" r="3" fill="black"/>
+        </g>
+        <g transform="rotate(150)">
+            <circle cx="0" cy="-150" r="3" fill="black"/>
+        </g>
+        <g transform="rotate(180)">
+            <circle cx="0" cy="-150" r="3" fill="black"/>
+        </g>
+        <g transform="rotate(210)">
+            <circle cx="0" cy="-150" r="3" fill="black"/>
+        </g>
+        <g transform="rotate(240)">
+            <circle cx="0" cy="-150" r="3" fill="black"/>
+        </g>
+        <g transform="rotate(270)">
+            <circle cx="0" cy="-150" r="3" fill="black"/>
+        </g>
+        <g transform="rotate(300)">
+            <circle cx="0" cy="-150" r="3" fill="black"/>
+        </g>
+        <g transform="rotate(330)">
+            <circle cx="0" cy="-150" r="3" fill="black"/>
+        </g>
+    </g>
+
+    <!-- Note musicali (minori) -->
+    <g font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="14" text-anchor="middle">
+        <!-- Am -->
+        <g transform="rotate(0) translate(0,-170) rotate(0)">
+            <text>Am</text>
+        </g>
+        <!-- Em -->
+        <g transform="rotate(30) translate(0,-170) rotate(-30)">
+            <text>Em</text>
+        </g>
+        <!-- Bm -->
+        <g transform="rotate(60) translate(0,-170) rotate(-60)">
+            <text>Bm</text>
+        </g>
+        <!-- F♯m -->
+        <g transform="rotate(90) translate(0,-170) rotate(-90)">
+            <text>F♯m</text>
+        </g>
+        <!-- C♯m -->
+        <g transform="rotate(120) translate(0,-170) rotate(-120)">
+            <text>C♯m</text>
+        </g>
+        <!-- G♯m/A♭m -->
+        <g transform="rotate(150) translate(0,-170) rotate(-150)">
+            <text>G♯m</text>
+            <text dy="15">A♭m</text>
+        </g>
+        <!-- D♯m/E♭m -->
+        <g transform="rotate(180) translate(0,-170) rotate(-180)">
+            <text>D♯m</text>
+            <text dy="15">E♭m</text>
+        </g>
+        <!-- B♭m/A♯m -->
+        <g transform="rotate(210) translate(0,-170) rotate(-210)">
+            <text>B♭m</text>
+            <text dy="15">A♯m</text>
+        </g>
+        <!-- Fm -->
+        <g transform="rotate(240) translate(0,-170) rotate(-240)">
+            <text>Fm</text>
+        </g>
+        <!-- Cm -->
+        <g transform="rotate(270) translate(0,-170) rotate(-270)">
+            <text>Cm</text>
+        </g>
+        <!-- Gm -->
+        <g transform="rotate(300) translate(0,-170) rotate(-300)">
+            <text>Gm</text>
+        </g>
+        <!-- Dm -->
+        <g transform="rotate(330) translate(0,-170) rotate(-330)">
+            <text>Dm</text>
+        </g>
+    </g>
+</svg>

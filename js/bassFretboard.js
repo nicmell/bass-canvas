@@ -1,5 +1,5 @@
 import {colors} from "./constants";
-import {noteName} from "./utils";
+import {noteName, noteGrade, gradeName} from "./utils";
 
 const clamp = (value, lowerBound, upperBound) => {
     return Math.max(Math.min(value, Math.max(lowerBound, upperBound)), Math.min(lowerBound, upperBound));
@@ -15,23 +15,33 @@ export class BassFretboard {
                     scale,
                     startFret,
                     endFret,
+                    startNoteFret = startFret,
+                    endNoteFret = endFret,
                     mode,
                     stringCount = 4,
                     drawHeader = true,
                     drawFretboard = true,
+                    noteGrade = false
                 }) {
 
         this.drawHeader = drawHeader;
         this.drawFretboard = drawFretboard;
+        this.noteGrade = noteGrade;
 
         this.notes = notes;
         this.openNotes = openNotes;
+
         this.startFret = startFret;
         this.endFret = endFret;
+
+        this.startNoteFret = startNoteFret;
+        this.endNoteFret = endNoteFret;
+
         this.scale = scale;
         this.stringCount = stringCount;
 
         this.fretCount = endFret - startFret + 1;
+        this.noteFretCount = endNoteFret - startNoteFret + 1;
 
         this.emptyFretCount = Math.max(startFret, 1) - startFret
 
@@ -116,7 +126,7 @@ export class BassFretboard {
         for (let i = 0; i < fretCount; i++) {
             const fretNum = startFret + i;
             const x = (i + 0.5) * fretWidth;
-            const y = headerHeight + (this.stringCount *  fretHeight) / 2;
+            const y = headerHeight + (this.stringCount * fretHeight) / 2;
 
             if (fretNum >= 1 && fretMarkers.includes(fretNum)) {
                 ctx.beginPath();
@@ -150,12 +160,14 @@ export class BassFretboard {
         for (let i = 0; i < fretCount; i++) {
             const fretNum = startFret + i;
             const x = (i + 0.5) * fretWidth;
-             ctx.fillText(fretNum, x, headerY);
+            ctx.fillText(fretNum, x, headerY);
         }
     }
 
     drawScaleNotes(ctx) {
-        const {stringCount, startFret, fretCount, scale, mode} = this;
+        const {
+            stringCount, startFret, startNoteFret, fretCount, noteFretCount, scale, mode
+        } = this;
         const fretWidth = this.fretWidth(ctx)
         const fretHeight = this.fretHeight(ctx)
         const headerHeight = this.headerHeight(ctx)
@@ -164,15 +176,20 @@ export class BassFretboard {
         ctx.textAlign = "center";
 
         for (let string = 1; string <= stringCount; string++) {
-            for (let fret = startFret; fret <= fretCount + startFret - 1; fret++) {
+
+            for (let fret = startNoteFret; fret <= noteFretCount + startNoteFret - 1; fret++) {
+                const noteOffset = fretWidth * (startNoteFret - startFret);
+
                 const note = this.calculateNoteOnFret(string, fret);
+                const text = this.noteGrade ? gradeName(scale.indexOf(note)) : noteName(note);
 
                 if (scale.includes(note)) {
-                    const x = (fret - startFret + 0.5) * fretWidth;
+                    const x = noteOffset + (fret - startNoteFret + 0.5) * fretWidth;
                     const y = headerHeight + (stringCount - string) * fretHeight + fretHeight / 2;
 
                     ctx.beginPath();
                     ctx.arc(x, y, 12, 0, Math.PI * 2);
+
                     if (mode) {
                         const {light, dark} = colors[mode]
                         if (note === scale[0]) {
@@ -189,7 +206,7 @@ export class BassFretboard {
                     ctx.stroke();
 
                     ctx.fillStyle = "#000";
-                    ctx.fillText(noteName(note), x, y + 3);
+                    ctx.fillText(text, x, y + 3);
                 }
             }
         }
