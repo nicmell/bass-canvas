@@ -1,6 +1,10 @@
 import {colors} from "./constants";
 import {noteName} from "./utils";
 
+const clamp = (value, lowerBound, upperBound) => {
+    return Math.max(Math.min(value, Math.max(lowerBound, upperBound)), Math.min(lowerBound, upperBound));
+};
+
 export class BassFretboard {
     static canvasWidth = 300;
     static canvasHeight = 150;
@@ -13,7 +17,12 @@ export class BassFretboard {
                     endFret,
                     mode,
                     stringCount = 4,
+                    drawHeader = true,
+                    drawFretboard = true,
                 }) {
+
+        this.drawHeader = drawHeader;
+        this.drawFretboard = drawFretboard;
 
         this.notes = notes;
         this.openNotes = openNotes;
@@ -34,11 +43,15 @@ export class BassFretboard {
     }
 
     fretHeight(ctx) {
-        return ctx.canvas.height / (this.stringCount + 1);
+        return (ctx.canvas.height - this.headerHeight(ctx)) / this.stringCount;
     }
 
     fretboardOffset(ctx) {
         return this.fretWidth(ctx) * this.emptyFretCount
+    }
+
+    headerHeight(ctx) {
+        return this.drawHeader ? ctx.canvas.height / (this.stringCount + 1) : 0;
     }
 
     calculateNoteOnFret(string, fret) {
@@ -52,19 +65,21 @@ export class BassFretboard {
         const fretHeight = this.fretHeight(ctx)
         const fretboardOffset = this.fretboardOffset(ctx)
 
+        const headerHeight = this.headerHeight(ctx)
+
         ctx.fillStyle = "#f0e4d7";
-        ctx.fillRect(fretboardOffset, fretHeight, ctx.canvas.width, ctx.canvas.height - fretHeight);
+        ctx.fillRect(fretboardOffset, this.drawHeader ? fretHeight : 0, ctx.canvas.width, ctx.canvas.height - headerHeight);
     }
 
     drawFretLines(ctx) {
         const {fretCount, emptyFretCount} = this;
         const fretWidth = this.fretWidth(ctx)
-        const fretHeight = this.fretHeight(ctx)
+        const headerHeight = this.headerHeight(ctx)
 
         for (let i = emptyFretCount; i <= fretCount; i++) {
-            const x = i * fretWidth;
+            const x = clamp(i * fretWidth, 1, ctx.canvas.width - 1);
             ctx.beginPath();
-            ctx.moveTo(x, fretHeight);
+            ctx.moveTo(x, headerHeight);
             ctx.lineTo(x, ctx.canvas.height);
             ctx.strokeStyle = "#000";
             ctx.lineWidth = 1;
@@ -78,8 +93,10 @@ export class BassFretboard {
         const fretHeight = this.fretHeight(ctx)
         const fretboardOffset = this.fretboardOffset(ctx)
 
+        const headerHeight = this.headerHeight(ctx)
+
         for (let i = 0; i <= stringCount; i++) {
-            const y = (i + 1) * fretHeight;
+            const y = clamp(headerHeight + i * fretHeight, 1, ctx.canvas.height - 1);
             ctx.beginPath();
             ctx.moveTo(fretboardOffset, y);
             ctx.lineTo(ctx.canvas.width, y);
@@ -94,11 +111,12 @@ export class BassFretboard {
         const {fretCount, startFret} = this;
         const fretWidth = this.fretWidth(ctx)
         const fretHeight = this.fretHeight(ctx)
+        const headerHeight = this.headerHeight(ctx)
 
         for (let i = 0; i < fretCount; i++) {
             const fretNum = startFret + i;
             const x = (i + 0.5) * fretWidth;
-            const y = fretHeight + (ctx.canvas.height - fretHeight) / 2;
+            const y = headerHeight + (this.stringCount *  fretHeight) / 2;
 
             if (fretNum >= 1 && fretMarkers.includes(fretNum)) {
                 ctx.beginPath();
@@ -132,10 +150,7 @@ export class BassFretboard {
         for (let i = 0; i < fretCount; i++) {
             const fretNum = startFret + i;
             const x = (i + 0.5) * fretWidth;
-
-            if (fretNum >= 1) {
-                ctx.fillText(fretNum, x, headerY);
-            }
+             ctx.fillText(fretNum, x, headerY);
         }
     }
 
@@ -143,6 +158,7 @@ export class BassFretboard {
         const {stringCount, startFret, fretCount, scale, mode} = this;
         const fretWidth = this.fretWidth(ctx)
         const fretHeight = this.fretHeight(ctx)
+        const headerHeight = this.headerHeight(ctx)
 
         ctx.font = "12px Arial";
         ctx.textAlign = "center";
@@ -153,7 +169,7 @@ export class BassFretboard {
 
                 if (scale.includes(note)) {
                     const x = (fret - startFret + 0.5) * fretWidth;
-                    const y = (stringCount - string + 1) * fretHeight + fretHeight / 2;
+                    const y = headerHeight + (stringCount - string) * fretHeight + fretHeight / 2;
 
                     ctx.beginPath();
                     ctx.arc(x, y, 12, 0, Math.PI * 2);
@@ -180,11 +196,15 @@ export class BassFretboard {
     }
 
     draw(ctx) {
-        this.drawFretboardBackground(ctx);
-        this.drawFretHeaders(ctx);
-        this.drawFretLines(ctx);
-        this.drawStrings(ctx);
-        this.drawFretMarkers(ctx);
+        if (this.drawHeader) {
+            this.drawFretHeaders(ctx);
+        }
+        if (this.drawFretboard) {
+            this.drawFretboardBackground(ctx);
+            this.drawFretLines(ctx);
+            this.drawStrings(ctx);
+            this.drawFretMarkers(ctx);
+        }
         this.drawScaleNotes(ctx);
     }
 
