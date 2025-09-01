@@ -43,46 +43,8 @@
         </g>
     </g>
 
-    <!-- Punti di intersezione -->
-    <g>
-        <circle cx="0" cy="-150" r="3" fill="black"/>
-        <g transform="rotate(30)">
-            <circle cx="0" cy="-150" r="3" fill="black"/>
-        </g>
-        <g transform="rotate(60)">
-            <circle cx="0" cy="-150" r="3" fill="black"/>
-        </g>
-        <g transform="rotate(90)">
-            <circle cx="0" cy="-150" r="3" fill="black"/>
-        </g>
-        <g transform="rotate(120)">
-            <circle cx="0" cy="-150" r="3" fill="black"/>
-        </g>
-        <g transform="rotate(150)">
-            <circle cx="0" cy="-150" r="3" fill="black"/>
-        </g>
-        <g transform="rotate(180)">
-            <circle cx="0" cy="-150" r="3" fill="black"/>
-        </g>
-        <g transform="rotate(210)">
-            <circle cx="0" cy="-150" r="3" fill="black"/>
-        </g>
-        <g transform="rotate(240)">
-            <circle cx="0" cy="-150" r="3" fill="black"/>
-        </g>
-        <g transform="rotate(270)">
-            <circle cx="0" cy="-150" r="3" fill="black"/>
-        </g>
-        <g transform="rotate(300)">
-            <circle cx="0" cy="-150" r="3" fill="black"/>
-        </g>
-        <g transform="rotate(330)">
-            <circle cx="0" cy="-150" r="3" fill="black"/>
-        </g>
-    </g>
-
     <!-- Note musicali -->
-    <g font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="14" text-anchor="middle">
+    <g font-size="14" text-anchor="middle">
         <!-- C -->
         <g transform="rotate(0) translate(0,-170) rotate(0)">
             <text>C</text>

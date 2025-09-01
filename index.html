@@ -60,24 +60,19 @@
             height: 100px;
             flex-grow: 1;
         }
-
-        .circle-of-fifths {
-            flex-basis: 50%;
-        }
-
     </style>
 </head>
 
 <body class="A4 landscape">
-<section class="sheet padding-10mm">
-    <div style="height: 100%; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 16px">
-        <div class="circle-of-fifths">
-            <img src="img/circle-of-fifhts-major.svg"/>
-        </div>
-        <div class="circle-of-fifths">
-            <img src="img/circle-of-fifhts-minor.svg"/>
-        </div>
+<section
+        class="sheet padding-10mm"
+        style="display: flex; flex-direction: column; justify-content: space-evenly;"
+>
+    <div style="display: flex; flex-direction: row;">
+        <img style="width: 50%" src="img/circle-of-fifhts-major.svg"/>
+        <img style="width: 50%" src="img/circle-of-fifhts-minor.svg"/>
     </div>
+    <img style="width: 100%" src="img/notes.svg"/>
 </section>
 
 <section class="sheet padding-10mm">
